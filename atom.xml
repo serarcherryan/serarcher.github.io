@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-03-07T04:48:07.808Z</updated>
+  <updated>2024-03-12T12:28:46.591Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode-滑动窗口解题模板总结</title>
+    <link href="http://example.com/2024/03/12/leetcode-sliding-window/"/>
+    <id>http://example.com/2024/03/12/leetcode-sliding-window/</id>
+    <published>2024-03-12T12:21:53.000Z</published>
+    <updated>2024-03-12T12:28:46.591Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;因为工作关系，coding不常用到算法，每次面试&amp;#x2F;工作中遇到都要回忆好久。因此特意总结一些常见leetcode算法的解题模板，面试&amp;#x2F;工作中遇到一些类似的问题可以节省很多回忆的时间。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;模板并不是所有问题的最优解，对于不同类型的</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
