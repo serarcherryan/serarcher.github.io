@@ -1,14 +1,14 @@
 ---
-title: leetcode-ksum
+title: K-Sum类问题解题模板
 date: 2024-03-13 23:04:05
 tags:
 ---
 
-# K-sum类问题解题模板
+# K-Sum
 
-K-sum类问题是指给你一个数组，让你从中挑选出K个数字满足和为N。
+K-Sum类问题是指给你一个数组，让你从中挑选出K个数字满足和为N。
 
-K-sum类的核心思想是 2Sum，然后套娃就行了。因此此类问题的关键点在于**2Sum**的实现。
+K-Sum类的核心思想是 2Sum，然后套娃就行了。因此此类问题的关键点在于**2Sum**的实现。
 
 **核心思路**：
 
@@ -31,9 +31,12 @@ def twoSum(nums, start, target):
         sum_ = nums[low] + nums[high]
         if sum_ < target:
             low += 1
-            while low < high and nums[low] == nums[low-1]: low += 1 # 指针一定要注意，因为前面已经low += 1了，所以现在的nums[low]一定要和nums[low-1]去比较
+            # 指针一定要注意，因为前面已经low += 1了
+            # 所以现在的nums[low]一定要和nums[low-1]去比较
+            while low < high and nums[low] == nums[low-1]: low += 1 
         elif sum_ > target:
             high -= 1
+            # nums[high]同理
             while low < high and nums[high] == nums[high+1]: high -= 1
         else:
             res.append([nums[low], nums[high]])
