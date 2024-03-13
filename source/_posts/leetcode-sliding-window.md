@@ -38,7 +38,7 @@ for right in range(n): ## 扩大窗口，右移右指针
 
 
 
-## 3. 无重复字符的最长子串
+## [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
 
 ```python
 class Solution:
@@ -65,7 +65,7 @@ class Solution:
 
 
 
-## 209. 长度的最小子数组
+## [209. 长度的最小子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
 
 ```python
 class Solution:

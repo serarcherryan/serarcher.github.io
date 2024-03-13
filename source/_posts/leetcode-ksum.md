@@ -64,3 +64,43 @@ def threeSum(nums, target):
         
 ```
 
+
+
+## [15. 三数之和](https://leetcode.cn/problems/3sum/)
+
+```python
+class Solution:
+    def twoSum(self, nums, start, target):
+        res = []
+        low = start
+        high = len(nums) - 1
+        while low < high:
+            sum_ = nums[low] + nums[high]
+            if sum_ > target:
+                high -= 1
+                while low < high and nums[high] == nums[high+1]: high = high -1
+            elif sum_ < target:
+                low += 1
+                while low < high and nums[low] == nums[low-1]: low += 1
+            else:
+                res.append([nums[low], nums[high]])
+                high -= 1
+                low += 1
+                while low < high and nums[high] == nums[high+1]: high -= 1
+                while low < high and nums[low] == nums[low-1]: low += 1
+        return res
+
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        res = []
+        for i in range(len(nums)-2):
+            if nums[i] > 0: break
+            if i > 0 and nums[i] == nums[i-1]: continue
+            tuples = self.twoSum(nums, i+1, -nums[i])
+            for tup in tuples:
+                tup.append(nums[i])
+                res.append(tup)
+        return res
+```
+
+ 
