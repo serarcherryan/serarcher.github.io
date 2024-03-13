@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-03-13T15:26:45.035Z</updated>
+  <updated>2024-03-13T15:34:46.842Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,18 +17,19 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>leetcode-ksum</title>
+    <title>K-Sum类问题解题模板</title>
     <link href="http://example.com/2024/03/13/leetcode-ksum/"/>
     <id>http://example.com/2024/03/13/leetcode-ksum/</id>
     <published>2024-03-13T15:04:05.000Z</published>
-    <updated>2024-03-13T15:26:45.035Z</updated>
+    <updated>2024-03-13T15:34:46.842Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;K-sum类问题解题模板&quot;&gt;&lt;a href=&quot;#K-sum类问题解题模板&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;K-Sum&quot;&gt;&lt;a href=&quot;#K-Sum&quot; class=&quot;headerlink&quot; title=&quot;K-Sum&quot;&gt;&lt;/a&gt;K-Sum&lt;/h1&gt;&lt;p&gt;K-Sum类问题是指给你一个数组，让你从中挑选出K个数字满足和为N。&lt;/p&gt;
+&lt;p&gt;K-Sum类的核心思想是</summary>
         
       
     
@@ -38,11 +39,11 @@
   </entry>
   
   <entry>
-    <title>Leetcode-滑动窗口解题模板总结</title>
+    <title>Leetcode-滑动窗口解题模板</title>
     <link href="http://example.com/2024/03/12/leetcode-sliding-window/"/>
     <id>http://example.com/2024/03/12/leetcode-sliding-window/</id>
     <published>2024-03-12T12:21:53.000Z</published>
-    <updated>2024-03-12T12:28:46.591Z</updated>
+    <updated>2024-03-13T15:34:05.063Z</updated>
     
     
       
