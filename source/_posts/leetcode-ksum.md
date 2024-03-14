@@ -104,3 +104,23 @@ class Solution:
 ```
 
  
+
+## [1. 两数之和](https://leetcode.cn/problems/two-sum/description/)
+
+这里有个小技巧：**给定一个数组，当我们每次需要移动一个指针，然后遍历扫描该指针后面的数组元素的时候，其实可以用哈希表来降低算法复杂度 —— 仅需要扫一遍即可**
+
+```python
+# 输入：nums = [2,7,11,15], target = 9
+# 输出：[0,1]
+# 解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        hashtable = {}
+        for i, num in enumerate(nums):
+            if target - num in hashtable:
+                return [hashtable[target-num], i]
+            hashtable[nums[i]] = i # 每次在最后往哈希表里更新即可
+        return []
+```
+
