@@ -120,3 +120,46 @@ class Solution:
 
 ```
 
+
+
+## [226. 翻转二叉树](https://leetcode.cn/problems/invert-binary-tree/)
+
+```python
+# 输入：root = [4,2,7,1,3,6,9]
+# 输出：[4,7,2,9,6,3,1]
+
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        def dfs(root):
+            if not root:
+                return
+            root.left, root.right = root.right, root.left
+            dfs(root.left)
+            dfs(root.right)
+        dfs(root)
+        return root
+```
+
+
+
+## [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/)
+
+```python
+# 输入：root = [1,2,3,4,5]
+# 输出：3
+# 解释：3 ，取路径 [4,2,1,3] 或 [5,2,1,3] 的长度
+
+class Solution:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        self.d = 0  # 记录最终结果
+        def dfs(root):
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            self.d = max(self.d, left + right)
+            return max(left, right) + 1   # 要维护的是当前结点的最长子路径，回撤操作+1
+        dfs(root)
+        return self.d
+```
+
