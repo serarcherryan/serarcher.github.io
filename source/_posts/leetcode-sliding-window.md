@@ -1,5 +1,5 @@
 ---
-title: Leetcode-滑动窗口解题模板
+title: 滑动窗口解题模板
 date: 2024-03-12 20:21:53
 tags:
 ---
