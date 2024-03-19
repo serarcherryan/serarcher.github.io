@@ -1,7 +1,7 @@
 ---
 title: K-Sum类问题解题模板
 date: 2024-03-13 23:04:05
-tags:
+tags: Leetcode算法笔记
 ---
 
 # K-Sum
