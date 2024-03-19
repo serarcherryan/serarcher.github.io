@@ -1,7 +1,10 @@
 ---
 title: 排序算法总结
 date: 2024-03-19 22:29:55
-tags: Leetcode算法笔记
+categories: 
+- Leetcode算法笔记
+tags: 
+- Leetcode算法笔记
 ---
 
 # 排序算法总结

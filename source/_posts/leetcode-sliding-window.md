@@ -1,7 +1,10 @@
 ---
 title: 滑动窗口解题模板
 date: 2024-03-12 20:21:53
-tags: Leetcode算法笔记
+categories: 
+- Leetcode算法笔记
+tags: 
+- Leetcode算法笔记
 ---
 
 因为工作关系，coding不常用到算法，每次面试/工作中遇到都要回忆好久。因此特意总结一些常见leetcode算法的解题模板，面试/工作中遇到一些类似的问题可以节省很多回忆的时间。
