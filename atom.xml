@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-03-19T15:15:20.312Z</updated>
+  <updated>2024-03-20T15:19:00.942Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>动态规划解题模板</title>
+    <link href="http://example.com/2024/03/20/leetcode-dp/"/>
+    <id>http://example.com/2024/03/20/leetcode-dp/</id>
+    <published>2024-03-20T15:12:38.000Z</published>
+    <updated>2024-03-20T15:19:00.942Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;动态规划&quot;&gt;&lt;a href=&quot;#动态规划&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Leetcode算法笔记" scheme="http://example.com/categories/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="Leetcode算法笔记" scheme="http://example.com/tags/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>BFS解题模板</title>
+    <link href="http://example.com/2024/03/20/leetcode-bfs/"/>
+    <id>http://example.com/2024/03/20/leetcode-bfs/</id>
+    <published>2024-03-20T15:03:16.000Z</published>
+    <updated>2024-03-20T15:18:51.394Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;BFS&quot;&gt;&lt;a href=&quot;#BFS&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Leetcode算法笔记" scheme="http://example.com/categories/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="Leetcode算法笔记" scheme="http://example.com/tags/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>排序算法总结</title>
@@ -46,7 +96,7 @@
     <link href="http://example.com/2024/03/14/leetcode-backtrace/"/>
     <id>http://example.com/2024/03/14/leetcode-backtrace/</id>
     <published>2024-03-14T11:32:27.000Z</published>
-    <updated>2024-03-19T15:20:44.293Z</updated>
+    <updated>2024-03-20T15:04:28.204Z</updated>
     
     
       

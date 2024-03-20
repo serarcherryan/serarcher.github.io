@@ -171,6 +171,134 @@
     
     
     <article
+  id="post-leetcode-dp"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/03/20/leetcode-dp/"
+    >动态规划解题模板</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/03/20/leetcode-dp/" class="article-date">
+  <time datetime="2024-03-20T15:12:38.000Z" itemprop="datePublished">2024-03-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/">Leetcode算法笔记</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>核心思路</strong></p>
+<ul>
+<li>确定状态，即问题的变量</li>
+<li>确定dp方程</li>
+<li>采用自底向上 &#x2F; 自顶向下的解法</li>
+</ul>
+<p><strong>自底向上</strong></p>
+<ul>
+<li>从dp(0)开始举几个例子即可</li>
+<li>确定好base case，假设base case确定到dp(n)，那么for循环的变量一定要从n+1的情况开始</li>
+<li>例：for循环的变量从2开始，那么一定要确定的base case是dp(0), dp(1)</li>
+</ul>
+<h2 id="322-零钱兑换"><a href="#322-零钱兑换" class="headerlink" title="322. 零钱兑换"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/coin-change/">322. 零钱兑换</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">coinChange</span>(<span class="params">self, coins: <span class="type">List</span>[<span class="built_in">int</span>], amount: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="comment">## dp(n) = min&#123;d(n-coin)&#125; + 1, coin=1,2,5, n &gt; 0</span></span><br><span class="line">        <span class="comment">## dp(0) == 0</span></span><br><span class="line">        <span class="comment">## dp(1) == min&#123;dp(1-1), dp(1-2), dp(1-5)&#125; + 1 == dp(1-1) + 1 == 1</span></span><br><span class="line">        <span class="comment">## dp(2) == min&#123;dp(2-1), dp(2-2), dp(2-5)&#125; + 1 == dp(2-2) + 1 == 1</span></span><br><span class="line">        <span class="comment">## dp(3) == min&#123;dp(3-1), dp(3-2), dp(3-5)&#125; + 1 == dp(2) + 1 == 2</span></span><br><span class="line">        <span class="comment">## dp(4) == min&#123;dp(4-1), dp(4-2), dp(4-5)&#125; + 1 == dp(2) + 1 == 2</span></span><br><span class="line">        dp = [<span class="built_in">float</span>(<span class="string">&#x27;inf&#x27;</span>)] * (amount + <span class="number">1</span>)</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> coin <span class="keyword">in</span> coins:</span><br><span class="line">            <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(coin, amount + <span class="number">1</span>):</span><br><span class="line">                dp[x] = <span class="built_in">min</span>(dp[x], dp[x - coin] + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> dp[amount] <span class="keyword">if</span> dp[amount] != <span class="built_in">float</span>(<span class="string">&#x27;inf&#x27;</span>) <span class="keyword">else</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" rel="tag">Leetcode算法笔记</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
+  id="post-leetcode-bfs"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/03/20/leetcode-bfs/"
+    >BFS解题模板</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/03/20/leetcode-bfs/" class="article-date">
+  <time datetime="2024-03-20T15:03:16.000Z" itemprop="datePublished">2024-03-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/">Leetcode算法笔记</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h1><p><strong>核心思路</strong></p>
+<ul>
+<li>维护一个队列，队列里存放的是同一行的所有节点。</li>
+<li>通过while循环每次把队列里的结点全部读掉，并且每读（pop）一个，就要将该结点的左右子结点存放进去</li>
+<li>循环直到队列为空</li>
+</ul>
+<h2 id="102-二叉树的层序遍历"><a href="#102-二叉树的层序遍历" class="headerlink" title="102. 二叉树的层序遍历"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-level-order-traversal/">102. 二叉树的层序遍历</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">levelOrder</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        res = []</span><br><span class="line">        queue = [root]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> queue:</span><br><span class="line">            <span class="comment">## 通过队列长度来遍历掉当前层的所有结点</span></span><br><span class="line">            n = <span class="built_in">len</span>(queue)</span><br><span class="line">            level = []</span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">	            node = queue.pop(<span class="number">0</span>)</span><br><span class="line">                level.append(node.val)</span><br><span class="line">                <span class="keyword">if</span> node.left: level.append(node.left)</span><br><span class="line">                <span class="keyword">if</span> node.right: level.append(node.right)</span><br><span class="line">            res.append(level)</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">            </span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" rel="tag">Leetcode算法笔记</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
   id="post-leetcode-sort"
   class="article article-type-post"
   itemscope
