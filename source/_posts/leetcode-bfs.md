@@ -42,3 +42,29 @@ class Solution:
             
 ```
 
+
+
+## [199. 二叉树的右视图](https://leetcode.cn/problems/binary-tree-right-side-view/)
+
+跟上面的唯一不同就是每层只取最右边的值作为结果返回
+
+```python
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
+            return []
+        res = []
+        queue = [root]
+        
+        while queue:
+            n = len(queue)
+            level = []
+            for _ in range(n):
+                node = queue.pop(0)
+                level.append(node.val)
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+            res.append(level[-1])
+        return res
+```
+
