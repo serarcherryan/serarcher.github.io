@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-03-20T15:19:00.942Z</updated>
+  <updated>2024-03-21T15:52:51.771Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>二进制学习笔记1-ASLR绕过</title>
+    <link href="http://example.com/2024/03/21/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01-ASLR%E7%BB%95%E8%BF%87/"/>
+    <id>http://example.com/2024/03/21/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01-ASLR%E7%BB%95%E8%BF%87/</id>
+    <published>2024-03-21T13:52:47.000Z</published>
+    <updated>2024-03-21T15:52:51.771Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1&gt;&lt;span id=&quot;二进制保护机制原理和绕过技巧&quot;&gt;二进制保护机制原理和绕过技巧&lt;/span&gt;&lt;/h1&gt;&lt;p&gt;[toc]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;0x00-工具&quot;&gt;0x00</summary>
+        
+      
+    
+    
+    
+    <category term="二进制学习笔记" scheme="http://example.com/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="二进制学习笔记" scheme="http://example.com/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>动态规划解题模板</title>
@@ -28,7 +54,11 @@
       
         
         
-    <summary type="html">&lt;h2 id=&quot;动态规划&quot;&gt;&lt;a href=&quot;#动态规划&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h2&gt;&lt;span id=&quot;动态规划&quot;&gt;动态规划&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;核心思路&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;确定状态，即问题的变量&lt;/li&gt;
+&lt;li&gt;确定dp方程&lt;/li&gt;
+&lt;li&gt;采用自底向上 &amp;#x2F;</summary>
         
       
     
@@ -53,7 +83,7 @@
       
         
         
-    <summary type="html">&lt;h1 id=&quot;BFS&quot;&gt;&lt;a href=&quot;#BFS&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h1&gt;&lt;span</summary>
         
       
     
@@ -78,7 +108,8 @@
       
         
         
-    <summary type="html">&lt;h1 id=&quot;排序算法总结&quot;&gt;&lt;a href=&quot;#排序算法总结&quot; class=&quot;headerlink&quot; title=&quot;排序算法总结&quot;&gt;&lt;/a&gt;排序算法总结&lt;/h1&gt;&lt;p&gt;总结一把最可能面试面到的排序：**快速排序 **和</summary>
+    <summary type="html">&lt;h1&gt;&lt;span id=&quot;排序算法总结&quot;&gt;排序算法总结&lt;/span&gt;&lt;/h1&gt;&lt;p&gt;总结一把最可能面试面到的排序：**快速排序 **和 &lt;strong&gt;归并排序&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;&lt;span</summary>
         
       
     
@@ -103,7 +134,7 @@
       
         
         
-    <summary type="html">&lt;h1 id=&quot;回溯类问题-DFS&quot;&gt;&lt;a href=&quot;#回溯类问题-DFS&quot; class=&quot;headerlink&quot; title=&quot;回溯类问题-DFS&quot;&gt;&lt;/a&gt;回溯类问题-DFS&lt;/h1&gt;&lt;p&gt;每次刷题刷完了不久就会忘记DFS的很多细节。。直到看到了东哥的&lt;a</summary>
+    <summary type="html">&lt;h1&gt;&lt;span id=&quot;回溯类问题-dfs&quot;&gt;回溯类问题-DFS&lt;/span&gt;&lt;/h1&gt;&lt;p&gt;每次刷题刷完了不久就会忘记DFS的很多细节。。直到看到了东哥的&lt;a</summary>
         
       
     
@@ -128,7 +159,7 @@
       
         
         
-    <summary type="html">&lt;h1 id=&quot;K-Sum&quot;&gt;&lt;a href=&quot;#K-Sum&quot; class=&quot;headerlink&quot; title=&quot;K-Sum&quot;&gt;&lt;/a&gt;K-Sum&lt;/h1&gt;&lt;p&gt;K-Sum类问题是指给你一个数组，让你从中挑选出K个数字满足和为N。&lt;/p&gt;
+    <summary type="html">&lt;h1&gt;&lt;span id=&quot;k-sum&quot;&gt;K-Sum&lt;/span&gt;&lt;/h1&gt;&lt;p&gt;K-Sum类问题是指给你一个数组，让你从中挑选出K个数字满足和为N。&lt;/p&gt;
 &lt;p&gt;K-Sum类的核心思想是</summary>
         
       
