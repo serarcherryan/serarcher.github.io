@@ -9,8 +9,6 @@ tags:
 
 # 二进制保护机制原理和绕过技巧
 
-[toc]
-
 ## 0x00 工具
 
 - **peda**
@@ -34,18 +32,18 @@ readelf -s /lib/x86_64-linux-gnu/libc.so.6 | grep system
 
 ASLR（地址空间布局随机化）的原理不作详细介绍，它可以将进程内的某些内存地址进行随机化来加大入侵难度。因此我们很难直接通过ret2libc成功利用漏洞。
 
-### 1. 绕过ASLR核心点 
+**绕过ASLR核心点** 
 
 - 开启ASLR后，libc的**基地址会变**，但是**函数的偏移量不会变**
 - system 函数地址 = libc基地址 + 函数偏移量
 
-![image-20240321222858287](C:\Users\Ryan\AppData\Roaming\Typora\typora-user-images\image-20240321222858287.png)
+![](https://pic.imgdb.cn/item/65fc5d2f9f345e8d03706af0.png)
 
-![image-20240321222637434](C:\Users\Ryan\AppData\Roaming\Typora\typora-user-images\image-20240321222637434.png)
+![](https://pic.imgdb.cn/item/65fc5d309f345e8d03706da2.png)
 
 
 
-### 2. return-to-plt技术
+## 0x02 return-to-plt技术
 
 #### 2.1 背景知识
 
@@ -53,7 +51,7 @@ ASLR（地址空间布局随机化）的原理不作详细介绍，它可以将�
 
 ##### 2.1.1 Linux内存布局
 
-![image-20240321224452523](C:\Users\Ryan\AppData\Roaming\Typora\typora-user-images\image-20240321224452523.png)
+![](https://pic.imgdb.cn/item/65fc5d309f345e8d03706c09.png)
 
 - .text 汇编代码
 - .data 无初始值的数据（静态变量，全局变量）
@@ -109,7 +107,7 @@ ASLR（地址空间布局随机化）的原理不作详细介绍，它可以将�
 
 
 
-## 0x02 漏洞利用
+## 0x03 漏洞利用
 
 ### 1. 漏洞代码
 
@@ -205,7 +203,7 @@ libc.so.6 : 0x7fe9a4c99117 --> 0x68732f6e69622f ('/bin/sh')
 
 ### 4. EXP
 
-exp的构造，首先向缓冲区中填充256个字节的‘A’+向对齐空间中填充16字节的‘A’+ system@PLT的地址+exit@PLT的地址+system_arg的地址。
+exp的构造，首先向缓冲区中填充256个字节的‘A’ + 向对齐空间中填充16字节的‘A’ + system@PLT的地址 + exit@PLT的地址 + system_arg的地址。
 
 ```python
 from pwn import *
@@ -220,7 +218,7 @@ io.interactive()
 
 
 
-## 参考
+## 0x04 参考
 
 [1] [绕过ASLR-一](https://gxkyrftx.github.io/2019/03/02/%E7%BB%95%E8%BF%87ASLR-%E4%B8%80/)
 
