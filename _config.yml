@@ -40,7 +40,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-#post_asset_folder: false
+post_asset_folder: false
 relative_link: false
 future: true
 syntax_highlighter: highlight.js
@@ -125,9 +125,3 @@ feed:
 # 目录
 #toc:
 #  maxdepth: 4
-
-# hexo-renderer-marked嵌入图片
-post_asset_folder: true
-marked:
-  prependRoot: true
-  postAsset: true
