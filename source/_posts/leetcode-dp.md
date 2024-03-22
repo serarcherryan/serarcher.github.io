@@ -42,3 +42,37 @@ class Solution:
         return dp[amount] if dp[amount] != float('inf') else -1
 ```
 
+
+
+## [22. 括号生成](https://leetcode.cn/problems/generate-parentheses/)
+
+这题可以用dp解纯粹是因为发现了一个规律，即：对于n组'()'，在'()'的不同位置，添加任意'()'，即可得到n+1的解。又即，dp(n)依赖于dp(n-1)。
+
+同样的，又因为我们可以记录()的路径，我们同样可以用回溯法来解，见回溯解法。
+
+```python
+# 数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+# 示例 1：
+# 输入：n = 3
+# 输出：["((()))","(()())","(())()","()(())","()()()"]
+
+# 示例 2：
+# 输入：n = 1
+# 输出：["()"]
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]: ## 注意，函数返回的是List
+        ## 
+        ## dp[0] = 0 
+        ## dp[1] = 1  "()"
+        ## dp[2] = dp[1] + 2 - 1 = 2 "(()), ()()"
+        ## dp[3] = dp[2] + 4 - 1 = 5   "((()))  (()()) (())() " + "()(()) ()()()"
+        ## dp[n] = dp[n-1] + 2n - 1
+        if n == 1: return ["()"]
+        res = set()
+        for pre_str in self.generateParenthesis(n-1): ## 要求dp(n)，就要用到dp(n-1)
+            for j in range(1, len(pre_str) + 1):
+                res.add(pre_str[:j] + "()" + pre_str[j:])
+        return list(res)
+```
+

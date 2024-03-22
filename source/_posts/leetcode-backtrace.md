@@ -9,6 +9,8 @@ tags:
 
 # Leetcode笔记3 - 回溯类问题-DFS
 
+## 1. 回溯类问题
+
 每次刷题刷完了不久就会忘记DFS的很多细节。。直到看到了东哥的[回溯算法详解](https://mp.weixin.qq.com/s/nMUHqvwzG2LmWA9jMIHwQQ)，才从根上理解了这一类算法的底层原理。
 
 对于我这种看到算法就头疼的选手，还真得靠这种大佬帮忙梳理总结底层原理才行。。
@@ -44,7 +46,7 @@ for 选择 in 选择列表：
 
 
 
-## [49. 子集](https://leetcode.cn/problems/subsets/)
+### [49. 子集](https://leetcode.cn/problems/subsets/)
 
 ```python
 # 输入：nums = [1,2,3]
@@ -96,7 +98,7 @@ class Solution:
 
 
 
-## [46. 全排列](https://leetcode.cn/problems/permutations/description/)
+### [46. 全排列](https://leetcode.cn/problems/permutations/description/)
 
 ```python
 # 输入：nums = [1,2,3]
@@ -125,7 +127,47 @@ class Solution:
 
 
 
-## [226. 翻转二叉树](https://leetcode.cn/problems/invert-binary-tree/)
+### [22. 括号生成](https://leetcode.cn/problems/generate-parentheses/)
+
+此题同样可以通过动态规划求解，因为我们发现对于n组'()'，在'()'的不同位置，添加任意'()'，即可得到n+1的解。又即，dp(n)依赖于dp(n-1)。详细解法见动态规划类解题模板。
+
+```python
+# 数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+# 示例 1：
+# 输入：n = 3
+# 输出：["((()))","(()())","(())()","()(())","()()()"]
+
+# 示例 2：
+# 输入：n = 1
+# 输出：["()"]
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        track = ""
+        def backtrace(n, left, right, track):
+            if left > n or right > left:
+                return
+            if left == right == n:
+                res.append(track)
+                return
+            for choice in ['(',')']: ## 注意，我们的选择其实只有'('和')'两个，我们的base case取决于'('和')'的数量
+                if choice == '(': left += 1
+                else: right += 1
+                track += choice
+                backtrace(n, left, right, track)
+                if track[-1] == '(': left -= 1
+                else: right -= 1
+                track = track[:-1]
+
+        backtrace(n, 0, 0, track)
+        return res
+```
+
+
+
+## 2. DFS类问题
+
+### [226. 翻转二叉树](https://leetcode.cn/problems/invert-binary-tree/)
 
 ```python
 # 输入：root = [4,2,7,1,3,6,9]
@@ -145,7 +187,7 @@ class Solution:
 
 
 
-## [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/)
+### [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/)
 
 ```python
 # 输入：root = [1,2,3,4,5]
