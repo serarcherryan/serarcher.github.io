@@ -171,6 +171,68 @@
     
     
     <article
+  id="post-leetcode-stack"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/03/22/leetcode-stack/"
+    >Leetcode笔记7 - 栈结构总结</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/03/22/leetcode-stack/" class="article-date">
+  <time datetime="2024-03-22T05:32:02.000Z" itemprop="datePublished">2024-03-22</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/">Leetcode算法笔记</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Leetcode笔记7-栈结构总结"><a href="#Leetcode笔记7-栈结构总结" class="headerlink" title="Leetcode笔记7 - 栈结构总结"></a>Leetcode笔记7 - 栈结构总结</h1><p>栈的特点是：先进后出，后进先出。</p>
+<p>遇到需要先进后出的题，优先考虑栈结构。例如：匹配括号等。</p>
+<h2 id="1-辅助栈"><a href="#1-辅助栈" class="headerlink" title="1. 辅助栈"></a>1. 辅助栈</h2><h3 id="20-有效的括号"><a href="#20-有效的括号" class="headerlink" title="20. 有效的括号"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-parentheses/">20. 有效的括号</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入：s = &quot;()&quot;</span></span><br><span class="line"><span class="comment"># 输出：true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入：s = &quot;(]&quot;</span></span><br><span class="line"><span class="comment"># 输出：false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isValid</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="comment">## ([&#123;&#125;()])</span></span><br><span class="line">        stack = [<span class="string">&#x27;?&#x27;</span>]</span><br><span class="line">        hashmap = &#123;<span class="string">&#x27;(&#x27;</span>:<span class="string">&#x27;)&#x27;</span>,<span class="string">&#x27;[&#x27;</span>:<span class="string">&#x27;]&#x27;</span>,<span class="string">&#x27;&#123;&#x27;</span>:<span class="string">&#x27;&#125;&#x27;</span>,<span class="string">&#x27;?&#x27;</span>:<span class="string">&#x27;?&#x27;</span>&#125;</span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">if</span> c <span class="keyword">in</span> hashmap: stack.append(c)</span><br><span class="line">            <span class="keyword">elif</span> c != hashmap[stack.pop()]: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span> <span class="keyword">if</span> <span class="built_in">len</span>(stack) == <span class="number">1</span> <span class="keyword">else</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-单调栈"><a href="#2-单调栈" class="headerlink" title="2. 单调栈"></a>2. 单调栈</h2><p>单调栈是用来解决“<strong>下一个更大</strong>”类型的题目。</p>
+<p>一个数组，要求你找到每个元素对应的下一个更大的元素。</p>
+<p>[To do]</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" rel="tag">Leetcode算法笔记</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
   id="post-二进制学习笔记1-ASLR绕过"
   class="article article-type-post"
   itemscope
@@ -312,7 +374,7 @@
        
 <h2 itemprop="name">
   <a class="article-title" href="/2024/03/20/leetcode-dp/"
-    >动态规划解题模板</a> 
+    >Leetcode笔记6 - 动态规划解题模板</a> 
 </h2>
  
 
@@ -331,7 +393,7 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p><strong>核心思路</strong></p>
+  <h2 id="Leetcode笔记6-动态规划"><a href="#Leetcode笔记6-动态规划" class="headerlink" title="Leetcode笔记6 - 动态规划"></a>Leetcode笔记6 - 动态规划</h2><p><strong>核心思路</strong></p>
 <ul>
 <li>确定状态，即问题的变量</li>
 <li>确定dp方程</li>
@@ -379,7 +441,7 @@
        
 <h2 itemprop="name">
   <a class="article-title" href="/2024/03/20/leetcode-bfs/"
-    >BFS解题模板</a> 
+    >Leetcode笔记4 - BFS解题模板</a> 
 </h2>
  
 
@@ -398,7 +460,7 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h1><p><strong>核心思路</strong></p>
+  <h1 id="Leetcode笔记5-BFS"><a href="#Leetcode笔记5-BFS" class="headerlink" title="Leetcode笔记5 - BFS"></a>Leetcode笔记5 - BFS</h1><p><strong>核心思路</strong></p>
 <ul>
 <li>维护一个队列，队列里存放的是同一行的所有节点。</li>
 <li>通过while循环每次把队列里的结点全部读掉，并且每读（pop）一个，就要将该结点的左右子结点存放进去</li>
@@ -445,7 +507,7 @@
        
 <h2 itemprop="name">
   <a class="article-title" href="/2024/03/19/leetcode-sort/"
-    >排序算法总结</a> 
+    >Leetcode笔记4 - 排序算法总结</a> 
 </h2>
  
 
@@ -464,7 +526,7 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="排序算法总结"><a href="#排序算法总结" class="headerlink" title="排序算法总结"></a>排序算法总结</h1><p>总结一把最可能面试面到的排序：**快速排序 **和 <strong>归并排序</strong></p>
+  <h1 id="Leetcode笔记4-排序算法总结"><a href="#Leetcode笔记4-排序算法总结" class="headerlink" title="Leetcode笔记4 - 排序算法总结"></a>Leetcode笔记4 - 排序算法总结</h1><p>总结一把最可能面试面到的排序：**快速排序 **和 <strong>归并排序</strong></p>
 <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p><strong>核心思路</strong></p>
 <ul>
 <li>快速排序的思路是每次确定一个值，该值的左边都是比它小的，右边都是比它大的</li>
@@ -514,7 +576,7 @@
        
 <h2 itemprop="name">
   <a class="article-title" href="/2024/03/14/leetcode-backtrace/"
-    >回溯类问题（DFS）解题模板</a> 
+    >Leetcode笔记3 - 回溯类问题（DFS）解题模板</a> 
 </h2>
  
 
@@ -533,7 +595,7 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="回溯类问题-DFS"><a href="#回溯类问题-DFS" class="headerlink" title="回溯类问题-DFS"></a>回溯类问题-DFS</h1><p>每次刷题刷完了不久就会忘记DFS的很多细节。。直到看到了东哥的<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nMUHqvwzG2LmWA9jMIHwQQ">回溯算法详解</a>，才从根上理解了这一类算法的底层原理。</p>
+  <h1 id="Leetcode笔记3-回溯类问题-DFS"><a href="#Leetcode笔记3-回溯类问题-DFS" class="headerlink" title="Leetcode笔记3 - 回溯类问题-DFS"></a>Leetcode笔记3 - 回溯类问题-DFS</h1><p>每次刷题刷完了不久就会忘记DFS的很多细节。。直到看到了东哥的<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nMUHqvwzG2LmWA9jMIHwQQ">回溯算法详解</a>，才从根上理解了这一类算法的底层原理。</p>
 <p>对于我这种看到算法就头疼的选手，还真得靠这种大佬帮忙梳理总结底层原理才行。。</p>
 <p><strong>核心框架 &amp;&amp; 解题模板</strong>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 定义：</span></span><br><span class="line"><span class="comment">#1、路径：当前已经做过的所有选择</span></span><br><span class="line"><span class="comment">#2、选择列表：当前结点可以做的选择</span></span><br><span class="line"><span class="comment">#3、结束条件：即到达决策树底层，无法再做选择的条件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 核心框架</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">backtrace</span>(<span class="params">路径，选择列表</span>)：</span><br><span class="line">	<span class="keyword">if</span> 满足结束条件：</span><br><span class="line">    	<span class="keyword">return</span></span><br><span class="line">    <span class="keyword">for</span> 选择 <span class="keyword">in</span> 选择列表：</span><br><span class="line">        <span class="comment">#做选择</span></span><br><span class="line">        backtrace()</span><br><span class="line">        <span class="comment">#撤销选择</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> 选择 <span class="keyword">in</span> 选择列表：</span><br><span class="line">	<span class="comment"># 做选择</span></span><br><span class="line">    选择列表.remove(当前选择)</span><br><span class="line">    路径.add(当前选择)</span><br><span class="line">    <span class="comment"># 回溯</span></span><br><span class="line">    backtrace(路径，选择列表)</span><br><span class="line">    <span class="comment"># 撤销选择</span></span><br><span class="line">    路径.remove(当前选择)</span><br><span class="line">    选择列表.add(当前选择)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -588,7 +650,7 @@
        
 <h2 itemprop="name">
   <a class="article-title" href="/2024/03/13/leetcode-ksum/"
-    >K-Sum类问题解题模板</a> 
+    >Leetcode笔记2 - K-Sum类问题解题模板</a> 
 </h2>
  
 
@@ -607,7 +669,7 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="K-Sum"><a href="#K-Sum" class="headerlink" title="K-Sum"></a>K-Sum</h1><p>K-Sum类问题是指给你一个数组，让你从中挑选出K个数字满足和为N。</p>
+  <h1 id="Leetcode笔记2-K-Sum"><a href="#Leetcode笔记2-K-Sum" class="headerlink" title="Leetcode笔记2 - K-Sum"></a>Leetcode笔记2 - K-Sum</h1><p>K-Sum类问题是指给你一个数组，让你从中挑选出K个数字满足和为N。</p>
 <p>K-Sum类的核心思想是 2Sum，然后套娃就行了。因此此类问题的关键点在于<strong>2Sum</strong>的实现。</p>
 <p><strong>核心思路</strong>：</p>
 <p>​	1、<strong>数组排序</strong></p>
@@ -658,7 +720,7 @@
        
 <h2 itemprop="name">
   <a class="article-title" href="/2024/03/12/leetcode-sliding-window/"
-    >滑动窗口解题模板</a> 
+    >Leetcode笔记1 - 滑动窗口解题模板</a> 
 </h2>
  
 
@@ -679,7 +741,7 @@
        
   <p>因为工作关系，coding不常用到算法，每次面试&#x2F;工作中遇到都要回忆好久。因此特意总结一些常见leetcode算法的解题模板，面试&#x2F;工作中遇到一些类似的问题可以节省很多回忆的时间。</p>
 <p><strong>模板并不是所有问题的最优解，对于不同类型的问题，时间&#x2F;空间复杂度都要分别再行思考，往往会有更加精巧的解法。</strong></p>
-<h1 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h1><p><strong>核心思路：</strong></p>
+<h1 id="Leetcode笔记1-滑动窗口"><a href="#Leetcode笔记1-滑动窗口" class="headerlink" title="Leetcode笔记1 - 滑动窗口"></a>Leetcode笔记1 - 滑动窗口</h1><p><strong>核心思路：</strong></p>
 <p>​	1、<strong>扩大窗口</strong>：移动右指针，直至达到特定要求（初始最优值）的时候</p>
 <p>​	2、<strong>收缩窗口</strong>：记录当前最优值，并移动左指针，直至满足扩大窗口的要求</p>
 <p><strong>套路模板</strong>：</p>

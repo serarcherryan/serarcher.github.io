@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>回溯类问题（DFS）解题模板 |  SerArcher&#39;s Blog</title>
+      <title>Leetcode笔记3 - 回溯类问题（DFS）解题模板 |  SerArcher&#39;s Blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -65,7 +65,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  回溯类问题（DFS）解题模板
+  Leetcode笔记3 - 回溯类问题（DFS）解题模板
 </h1>
  
 
@@ -85,7 +85,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">833</span>
+            <span class="post-count">836</span>
         </span>
     </span>
 
@@ -109,7 +109,7 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="回溯类问题-DFS"><a href="#回溯类问题-DFS" class="headerlink" title="回溯类问题-DFS"></a>回溯类问题-DFS</h1><p>每次刷题刷完了不久就会忘记DFS的很多细节。。直到看到了东哥的<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nMUHqvwzG2LmWA9jMIHwQQ">回溯算法详解</a>，才从根上理解了这一类算法的底层原理。</p>
+  <h1 id="Leetcode笔记3-回溯类问题-DFS"><a href="#Leetcode笔记3-回溯类问题-DFS" class="headerlink" title="Leetcode笔记3 - 回溯类问题-DFS"></a>Leetcode笔记3 - 回溯类问题-DFS</h1><p>每次刷题刷完了不久就会忘记DFS的很多细节。。直到看到了东哥的<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nMUHqvwzG2LmWA9jMIHwQQ">回溯算法详解</a>，才从根上理解了这一类算法的底层原理。</p>
 <p>对于我这种看到算法就头疼的选手，还真得靠这种大佬帮忙梳理总结底层原理才行。。</p>
 <p><strong>核心框架 &amp;&amp; 解题模板</strong>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 定义：</span></span><br><span class="line"><span class="comment">#1、路径：当前已经做过的所有选择</span></span><br><span class="line"><span class="comment">#2、选择列表：当前结点可以做的选择</span></span><br><span class="line"><span class="comment">#3、结束条件：即到达决策树底层，无法再做选择的条件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 核心框架</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">backtrace</span>(<span class="params">路径，选择列表</span>)：</span><br><span class="line">	<span class="keyword">if</span> 满足结束条件：</span><br><span class="line">    	<span class="keyword">return</span></span><br><span class="line">    <span class="keyword">for</span> 选择 <span class="keyword">in</span> 选择列表：</span><br><span class="line">        <span class="comment">#做选择</span></span><br><span class="line">        backtrace()</span><br><span class="line">        <span class="comment">#撤销选择</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> 选择 <span class="keyword">in</span> 选择列表：</span><br><span class="line">	<span class="comment"># 做选择</span></span><br><span class="line">    选择列表.remove(当前选择)</span><br><span class="line">    路径.add(当前选择)</span><br><span class="line">    <span class="comment"># 回溯</span></span><br><span class="line">    backtrace(路径，选择列表)</span><br><span class="line">    <span class="comment"># 撤销选择</span></span><br><span class="line">    路径.remove(当前选择)</span><br><span class="line">    选择列表.add(当前选择)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -211,7 +211,7 @@
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            排序算法总结
+            Leetcode笔记4 - 排序算法总结
           
         </div>
       </a>
@@ -219,7 +219,7 @@
     
       <a href="/2024/03/13/leetcode-ksum/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">K-Sum类问题解题模板</div>
+        <div class="article-nav-title">Leetcode笔记2 - K-Sum类问题解题模板</div>
       </a>
     
   </nav>
