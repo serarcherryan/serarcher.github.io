@@ -1,5 +1,5 @@
 ---
-title: Leetcode笔记4 - BFS解题模板
+title: Leetcode笔记5 - BFS解题模板
 date: 2024-03-20 23:03:16
 categories: 
 - Leetcode算法笔记
