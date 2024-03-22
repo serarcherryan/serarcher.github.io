@@ -1,5 +1,5 @@
 ---
-title: K-Sum类问题解题模板
+title: Leetcode笔记2 - K-Sum类问题解题模板
 date: 2024-03-13 23:04:05
 categories: 
 - Leetcode算法笔记
@@ -7,7 +7,7 @@ tags:
 - Leetcode算法笔记
 ---
 
-# K-Sum
+# Leetcode笔记2 - K-Sum
 
 K-Sum类问题是指给你一个数组，让你从中挑选出K个数字满足和为N。
 

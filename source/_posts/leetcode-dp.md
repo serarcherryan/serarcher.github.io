@@ -1,5 +1,5 @@
 ---
-title: 动态规划解题模板
+title: Leetcode笔记6 - 动态规划解题模板
 date: 2024-03-20 23:12:38
 categories: 
 - Leetcode算法笔记
@@ -9,7 +9,7 @@ tags:
 
 
 
-## 动态规划
+## Leetcode笔记6 - 动态规划
 
 **核心思路**
 

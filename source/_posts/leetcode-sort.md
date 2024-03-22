@@ -1,5 +1,5 @@
 ---
-title: 排序算法总结
+title: Leetcode笔记4 - 排序算法总结
 date: 2024-03-19 22:29:55
 categories: 
 - Leetcode算法笔记
@@ -7,7 +7,7 @@ tags:
 - Leetcode算法笔记
 ---
 
-# 排序算法总结
+# Leetcode笔记4 - 排序算法总结
 
 总结一把最可能面试面到的排序：**快速排序 **和 **归并排序**
 

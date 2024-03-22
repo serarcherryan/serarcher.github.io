@@ -1,5 +1,5 @@
 ---
-title: 回溯类问题（DFS）解题模板
+title: Leetcode笔记3 - 回溯类问题（DFS）解题模板
 date: 2024-03-14 19:32:27
 categories: 
 - Leetcode算法笔记
@@ -7,7 +7,7 @@ tags:
 - Leetcode算法笔记
 ---
 
-# 回溯类问题-DFS
+# Leetcode笔记3 - 回溯类问题-DFS
 
 每次刷题刷完了不久就会忘记DFS的很多细节。。直到看到了东哥的[回溯算法详解](https://mp.weixin.qq.com/s/nMUHqvwzG2LmWA9jMIHwQQ)，才从根上理解了这一类算法的底层原理。
 
