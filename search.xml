@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2024/03/07/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>CV深挖</title>
     <url>/2024/03/24/CV%E6%B7%B1%E6%8C%96/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Wrong password!" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -39,6 +21,24 @@
       <tags>
         <tag>面试</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2024/03/07/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>Leetcode笔记3 - 回溯类问题（DFS）解题模板</title>
@@ -124,6 +124,15 @@
 <p>同样的，又因为我们可以记录()的路径，我们同样可以用回溯法来解，见回溯解法。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。</span></span><br><span class="line"><span class="comment"># 示例 1：</span></span><br><span class="line"><span class="comment"># 输入：n = 3</span></span><br><span class="line"><span class="comment"># 输出：[&quot;((()))&quot;,&quot;(()())&quot;,&quot;(())()&quot;,&quot;()(())&quot;,&quot;()()()&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例 2：</span></span><br><span class="line"><span class="comment"># 输入：n = 1</span></span><br><span class="line"><span class="comment"># 输出：[&quot;()&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generateParenthesis</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]: <span class="comment">## 注意，函数返回的是List</span></span><br><span class="line">        <span class="comment">## </span></span><br><span class="line">        <span class="comment">## dp[0] = 0 </span></span><br><span class="line">        <span class="comment">## dp[1] = 1  &quot;()&quot;</span></span><br><span class="line">        <span class="comment">## dp[2] = dp[1] + 2 - 1 = 2 &quot;(()), ()()&quot;</span></span><br><span class="line">        <span class="comment">## dp[3] = dp[2] + 4 - 1 = 5   &quot;((()))  (()()) (())() &quot; + &quot;()(()) ()()()&quot;</span></span><br><span class="line">        <span class="comment">## dp[n] = dp[n-1] + 2n - 1</span></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">1</span>: <span class="keyword">return</span> [<span class="string">&quot;()&quot;</span>]</span><br><span class="line">        res = <span class="built_in">set</span>()</span><br><span class="line">        <span class="keyword">for</span> pre_str <span class="keyword">in</span> self.generateParenthesis(n-<span class="number">1</span>): <span class="comment">## 要求dp(n)，就要用到dp(n-1)</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(pre_str) + <span class="number">1</span>):</span><br><span class="line">                res.add(pre_str[:j] + <span class="string">&quot;()&quot;</span> + pre_str[j:])</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">list</span>(res)</span><br></pre></td></tr></table></figure>
 
+
+
+<h2 id="121-买卖股票的最佳时机"><a href="#121-买卖股票的最佳时机" class="headerlink" title="121. 买卖股票的最佳时机"></a><a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/">121. 买卖股票的最佳时机</a></h2><p>发现规律：<strong>前n天的最大收益 &#x3D; max(前n-1天的最大收益，第n天的收益 - 前n-1天的最小值)</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 输入：[7,1,5,3,6,4]</span></span><br><span class="line"><span class="comment"># 输出：5</span></span><br><span class="line"><span class="comment"># 解释：在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。</span></span><br><span class="line"><span class="comment"># 返回你可以从这笔交易中获取的最大利润。如果你不能获取任何利润，返回 0 </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="comment"># dp[n]: 前n天的最大收益</span></span><br><span class="line">    <span class="comment"># dp[1] = 0</span></span><br><span class="line">    <span class="comment"># dp[2] = max(dp[1], prices[1]-prices[0])</span></span><br><span class="line">    <span class="comment"># dp[3] = max(dp[2], prices[2]-min(prices[0], prices[1]))</span></span><br><span class="line">    <span class="comment"># dp[n] = max(dp[n-1], prices[n-1]-min(prices[0], prices[1], ... , prices[n-2]))</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxProfit</span>(<span class="params">self, prices: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        size = <span class="built_in">len</span>(prices)</span><br><span class="line">        <span class="keyword">if</span> size == <span class="number">1</span>: <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        dp = [<span class="built_in">float</span>(<span class="string">&#x27;inf&#x27;</span>)]* size</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">        min_val = prices[<span class="number">0</span>]</span><br><span class="line">        max_profit = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, size):</span><br><span class="line">            min_val = <span class="built_in">min</span>(prices[i-<span class="number">1</span>], min_val)</span><br><span class="line">            dp[i] = <span class="built_in">max</span>(dp[i-<span class="number">1</span>], prices[i]-min_val)</span><br><span class="line">            max_profit = <span class="built_in">max</span>(max_profit, dp[i])</span><br><span class="line">        <span class="keyword">return</span> max_profit</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这题还有一个更简单的方法，就是我们考虑遍历数组的时候，一定要考虑，<strong>有什么值是我们能维护的</strong>。</p>
+<p>比如这题中，我们<strong>每遍历一天的价格</strong>，都<strong>可以维护两个值</strong>：<strong>历史最低值</strong>min_val &#x3D; min(min_val, prices[n])，<strong>最大利润值</strong>max_val&#x3D;max(max_val, price - min_val)。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxProfit</span>(<span class="params">self, prices: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        min_val = <span class="built_in">float</span>(<span class="string">&#x27;inf&#x27;</span>)</span><br><span class="line">        max_profit = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> price <span class="keyword">in</span> prices:</span><br><span class="line">            max_profit = <span class="built_in">max</span>(max_profit, price - min_val)</span><br><span class="line">            min_val = <span class="built_in">min</span>(min_val, price)</span><br><span class="line">        <span class="keyword">return</span> max_profit</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>Leetcode算法笔记</category>
@@ -191,7 +200,7 @@
   <entry>
     <title>Leetcode笔记4 - 排序算法总结</title>
     <url>/2024/03/19/leetcode-sort/</url>
-    <content><![CDATA[<h1 id="Leetcode笔记4-排序算法总结"><a href="#Leetcode笔记4-排序算法总结" class="headerlink" title="Leetcode笔记4 - 排序算法总结"></a>Leetcode笔记4 - 排序算法总结</h1><p>总结一把最可能面试面到的排序：**快速排序 **和 <strong>归并排序</strong></p>
+    <content><![CDATA[<h1 id="Leetcode笔记4-排序算法总结"><a href="#Leetcode笔记4-排序算法总结" class="headerlink" title="Leetcode笔记4 - 排序算法总结"></a>Leetcode笔记4 - 排序算法总结</h1><p>总结一把最可能面试面到的排序：<strong>快速排序</strong>和 <strong>归并排序</strong></p>
 <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p><strong>核心思路</strong></p>
 <ul>
 <li>快速排序的思路是每次确定一个值，该值的左边都是比它小的，右边都是比它大的</li>
