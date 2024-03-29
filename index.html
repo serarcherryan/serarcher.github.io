@@ -123,10 +123,96 @@
 </ul>
   
   
+  
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content">这里不知道写点啥，但是不写点啥又光秃秃的，需要打广告的可以找我:)</div>
+</div>
+
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
   <article class="articles">
     
     
     
+    
+    <article
+  id="post-hello-world"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/03/07/hello-world/"
+    >前言
+  <i class="article-topping">置顶</i>
+</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/03/07/hello-world/" class="article-date">
+  <time datetime="2024-03-07T04:48:07.808Z" itemprop="datePublished">2024-03-07</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>记录、积累、反思、回顾</p>
+<p>May this blog help you.</p>
+<p>欢迎交流：<a href="mailto:&#121;&#x79;&#122;&#104;&#117;&#46;&#x72;&#121;&#97;&#x6e;&#x40;&#103;&#109;&#x61;&#105;&#108;&#x2e;&#99;&#x6f;&#109;">&#121;&#x79;&#122;&#104;&#117;&#46;&#x72;&#121;&#97;&#x6e;&#x40;&#103;&#109;&#x61;&#105;&#108;&#x2e;&#99;&#x6f;&#109;</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
     
     <article
   id="post-安全八股"
@@ -801,76 +887,6 @@
 
 <h2 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1. 两数之和"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/two-sum/description/">1. 两数之和</a></h2><p>这里有个小技巧：<strong>给定一个数组，当我们每次需要移动一个指针，然后遍历扫描该指针后面的数组元素的时候，其实可以用哈希表来降低算法复杂度 —— 仅需要扫一遍即可</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入：nums = [2,7,11,15], target = 9</span></span><br><span class="line"><span class="comment"># 输出：[0,1]</span></span><br><span class="line"><span class="comment"># 解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">twoSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        hashtable = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> i, num <span class="keyword">in</span> <span class="built_in">enumerate</span>(nums):</span><br><span class="line">            <span class="keyword">if</span> target - num <span class="keyword">in</span> hashtable:</span><br><span class="line">                <span class="keyword">return</span> [hashtable[target-num], i]</span><br><span class="line">            hashtable[nums[i]] = i <span class="comment"># 每次在最后往哈希表里更新即可</span></span><br><span class="line">        <span class="keyword">return</span> []</span><br></pre></td></tr></table></figure>
-
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" rel="tag">Leetcode算法笔记</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
-  id="post-leetcode-sliding-window"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/03/12/leetcode-sliding-window/"
-    >Leetcode笔记1 - 滑动窗口解题模板</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/03/12/leetcode-sliding-window/" class="article-date">
-  <time datetime="2024-03-12T12:21:53.000Z" itemprop="datePublished">2024-03-12</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/">Leetcode算法笔记</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>因为工作关系，coding不常用到算法，每次面试&#x2F;工作中遇到都要回忆好久。因此特意总结一些常见leetcode算法的解题模板，面试&#x2F;工作中遇到一些类似的问题可以节省很多回忆的时间。</p>
-<p><strong>模板并不是所有问题的最优解，对于不同类型的问题，时间&#x2F;空间复杂度都要分别再行思考，往往会有更加精巧的解法。</strong></p>
-<h1 id="Leetcode笔记1-滑动窗口"><a href="#Leetcode笔记1-滑动窗口" class="headerlink" title="Leetcode笔记1 - 滑动窗口"></a>Leetcode笔记1 - 滑动窗口</h1><p><strong>核心思路：</strong></p>
-<p>​	1、<strong>扩大窗口</strong>：移动右指针，直至达到特定要求（初始最优值）的时候</p>
-<p>​	2、<strong>收缩窗口</strong>：记录当前最优值，并移动左指针，直至满足扩大窗口的要求</p>
-<p><strong>套路模板</strong>：</p>
-<p>​	双重循环：<strong>外层循环移动右指针</strong>，<strong>里层循环移动左指针</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">left, right = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> right <span class="keyword">in</span> <span class="built_in">range</span>(n): <span class="comment">## 扩大窗口，右移右指针</span></span><br><span class="line">    <span class="comment">## 处理一些窗口相关的数据</span></span><br><span class="line">    <span class="keyword">while</span> window needs shirnk: <span class="comment">## 当达到当前最优值时，收缩窗口，右移左指针 </span></span><br><span class="line">    	<span class="comment">## 处理一些窗口相关的数据</span></span><br><span class="line">        keep.remove(s[left])</span><br><span class="line">        left += <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">## 一轮结束，开始新一轮扩大窗口</span></span><br><span class="line">    <span class="comment">## 处理一些窗口相关的数据</span></span><br><span class="line">    keep.add(s[right])</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="3-无重复字符的最长子串"><a href="#3-无重复字符的最长子串" class="headerlink" title="3. 无重复字符的最长子串"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-substring-without-repeating-characters/">3. 无重复字符的最长子串</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给定一个字符串 s ，请你找出其中不含有重复字符的最长子串的长度。</span></span><br><span class="line"><span class="comment"># 输入: s = &quot;abcabcbb&quot;</span></span><br><span class="line"><span class="comment"># 输出: 3 </span></span><br><span class="line"><span class="comment"># 解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">lengthOfLongestSubstring</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> s:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        keep = <span class="built_in">set</span>()</span><br><span class="line">        left, cur_len, max_len, n = <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="built_in">len</span>(s)</span><br><span class="line">        <span class="keyword">for</span> right <span class="keyword">in</span> <span class="built_in">range</span>(n): <span class="comment">## 扩大窗口，右移右指针</span></span><br><span class="line">            cur_len += <span class="number">1</span>	<span class="comment">## 处理一些窗口相关的数据：记录当前字符串长度</span></span><br><span class="line">            <span class="keyword">while</span> s[right] <span class="keyword">in</span> keep: <span class="comment">## 当遇到重复字符时，收缩窗口，右移左指针</span></span><br><span class="line">                <span class="comment">## 处理一些窗口相关的数据：</span></span><br><span class="line">                <span class="comment">## 右移左指针（之前要先删掉窗口里的元素）</span></span><br><span class="line">                <span class="comment">## 当前长度 - 1</span></span><br><span class="line">                keep.remove(s[left]) </span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">                cur_len -= <span class="number">1</span></span><br><span class="line">            <span class="comment">## 一轮结束，需要维护最大长度值，并且增加窗口元素</span></span><br><span class="line">            max_len = <span class="built_in">max</span>(max_len, cur_len)</span><br><span class="line">            keep.add(s[right])</span><br><span class="line">        <span class="keyword">return</span> max_len</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="209-长度的最小子数组"><a href="#209-长度的最小子数组" class="headerlink" title="209. 长度的最小子数组"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-size-subarray-sum/">209. 长度的最小子数组</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给定一个含有 n 个正整数的数组和一个正整数 target。找出该数组中满足其总和大于等于 target 的长度最小的 连续子数组[numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。</span></span><br><span class="line"><span class="comment"># 输入：target = 7, nums = [2,3,1,2,4,3]</span></span><br><span class="line"><span class="comment"># 输出：2</span></span><br><span class="line"><span class="comment"># 解释：子数组 [4,3] 是该条件下的长度最小的子数组。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minSubArrayLen</span>(<span class="params">self, target: <span class="built_in">int</span>, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        left, n = <span class="number">0</span>, <span class="built_in">len</span>(nums)</span><br><span class="line">        min_len = n + <span class="number">1</span></span><br><span class="line">        sum_ = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> right <span class="keyword">in</span> <span class="built_in">range</span>(n): <span class="comment">## 扩大窗口，右移右指针</span></span><br><span class="line">            sum_ += nums[right] <span class="comment">## 求窗口的和</span></span><br><span class="line">            <span class="keyword">while</span> sum_ &gt;= target: <span class="comment">## 当和大于等于target时，收缩窗口，右移左指针</span></span><br><span class="line">                min_len = <span class="built_in">min</span>(min_len, right + <span class="number">1</span> - left) <span class="comment">## 记录最小的窗口长度</span></span><br><span class="line">                <span class="comment">## 右移左指针，当前长度-1</span></span><br><span class="line">                sum_ -= nums[left] </span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> min_len == n + <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> min_len</span><br></pre></td></tr></table></figure>
 
  
       <!-- reward -->
