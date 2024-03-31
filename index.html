@@ -194,7 +194,7 @@
        
   <p>记录、积累、反思、回顾</p>
 <p>May this blog help you.</p>
-<p>欢迎交流：<a href="mailto:&#121;&#x79;&#122;&#104;&#117;&#46;&#x72;&#121;&#97;&#x6e;&#x40;&#103;&#109;&#x61;&#105;&#108;&#x2e;&#99;&#x6f;&#109;">&#121;&#x79;&#122;&#104;&#117;&#46;&#x72;&#121;&#97;&#x6e;&#x40;&#103;&#109;&#x61;&#105;&#108;&#x2e;&#99;&#x6f;&#109;</a></p>
+<p>欢迎交流：<a href="mailto:&#121;&#x79;&#122;&#x68;&#x75;&#x2e;&#114;&#121;&#x61;&#x6e;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#111;&#x6d;">&#121;&#x79;&#122;&#x68;&#x75;&#x2e;&#114;&#121;&#x61;&#x6e;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#111;&#x6d;</a></p>
  
       <!-- reward -->
       
@@ -205,6 +205,71 @@
     
     <footer class="article-footer">
        
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
+  id="post-leetcode-dp2"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/03/31/leetcode-dp2/"
+    >Leetcode笔记8 - 二维动态规划总结</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/03/31/leetcode-dp2/" class="article-date">
+  <time datetime="2024-03-31T13:57:10.000Z" itemprop="datePublished">2024-03-31</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/">Leetcode算法笔记</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Leetcode笔记8-二维动态规划"><a href="#Leetcode笔记8-二维动态规划" class="headerlink" title="Leetcode笔记8 - 二维动态规划"></a>Leetcode笔记8 - 二维动态规划</h1><p><strong>核心思路</strong></p>
+<ul>
+<li>确定状态，即问题的变量</li>
+<li>确定dp方程 —— 需要考虑dp[0][0], dp[i][0], dp[0][j] 的所有情况 </li>
+<li>采用自底向上 &#x2F; 自顶向下的解法</li>
+</ul>
+<h2 id="64-最小路径和"><a href="#64-最小路径和" class="headerlink" title="64. 最小路径和"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-path-sum/">64. 最小路径和</a></h2><p>第一步先将dp[0][0], dp[i][0], dp[0][j] 确定，然后下面自然开始考虑dp[1][1]的情况。很显然，**dp[1][1] &#x3D; min( dp[0][1] , dp[1][0] ) + grid[1][1]**。</p>
+<p><img src="https://assets.leetcode-cn.com/solution-static/64/9.png"></p>
+<p>对于任意的dp[i][j]，我们发现，由于<strong>只有两个方向能到达</strong>，因此**dp[i][j] &#x3D; min(dp[i-1][j], dp[i][j-1]) + grid[i][j]**。</p>
+<p><img src="https://assets.leetcode-cn.com/solution-static/64/17.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给定一个包含非负整数的 m x n 网格 grid ，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。</span></span><br><span class="line"><span class="comment">## dp[i][0] = dp[i-1][0] + grid[i][0]</span></span><br><span class="line"><span class="comment">## dp[0][j] = dp[0][j-1] + grid[0][j-1]</span></span><br><span class="line"><span class="comment">## dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minPathSum</span>(<span class="params">self, grid: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> grid <span class="keyword">or</span> <span class="keyword">not</span> grid[<span class="number">0</span>]:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        rows, cols = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">        dp = [[<span class="number">0</span>] * cols <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(rows)]</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = grid[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, rows):</span><br><span class="line">            dp[i][<span class="number">0</span>] = dp[i-<span class="number">1</span>][<span class="number">0</span>] + grid[i][<span class="number">0</span>]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, cols):</span><br><span class="line">            dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j-<span class="number">1</span>] + grid[<span class="number">0</span>][j]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, rows):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, cols):</span><br><span class="line">                dp[i][j] = <span class="built_in">min</span>(dp[i-<span class="number">1</span>][j], dp[i][j-<span class="number">1</span>]) + grid[i][j]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> dp[rows-<span class="number">1</span>][cols-<span class="number">1</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" rel="tag">Leetcode算法笔记</a></li></ul>
+
     </footer>
   </div>
 
@@ -575,7 +640,7 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="Leetcode笔记6-动态规划"><a href="#Leetcode笔记6-动态规划" class="headerlink" title="Leetcode笔记6 - 动态规划"></a>Leetcode笔记6 - 动态规划</h2><p><strong>核心思路</strong></p>
+  <h1 id="Leetcode笔记6-动态规划"><a href="#Leetcode笔记6-动态规划" class="headerlink" title="Leetcode笔记6 - 动态规划"></a>Leetcode笔记6 - 动态规划</h1><p><strong>核心思路</strong></p>
 <ul>
 <li>确定状态，即问题的变量</li>
 <li>确定dp方程</li>
@@ -817,76 +882,6 @@
 
 
 <h3 id="543-二叉树的直径"><a href="#543-二叉树的直径" class="headerlink" title="543. 二叉树的直径"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/diameter-of-binary-tree/">543. 二叉树的直径</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入：root = [1,2,3,4,5]</span></span><br><span class="line"><span class="comment"># 输出：3</span></span><br><span class="line"><span class="comment"># 解释：3 ，取路径 [4,2,1,3] 或 [5,2,1,3] 的长度</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">diameterOfBinaryTree</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        self.d = <span class="number">0</span>  <span class="comment"># 记录最终结果</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">root</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            left = dfs(root.left)</span><br><span class="line">            right = dfs(root.right)</span><br><span class="line">            self.d = <span class="built_in">max</span>(self.d, left + right)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">max</span>(left, right) + <span class="number">1</span>   <span class="comment"># 要维护的是当前结点的最长子路径，回撤操作+1</span></span><br><span class="line">        dfs(root)</span><br><span class="line">        <span class="keyword">return</span> self.d</span><br></pre></td></tr></table></figure>
-
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" rel="tag">Leetcode算法笔记</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
-  id="post-leetcode-ksum"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/03/13/leetcode-ksum/"
-    >Leetcode笔记2 - K-Sum类问题解题模板</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/03/13/leetcode-ksum/" class="article-date">
-  <time datetime="2024-03-13T15:04:05.000Z" itemprop="datePublished">2024-03-13</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/">Leetcode算法笔记</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="Leetcode笔记2-K-Sum"><a href="#Leetcode笔记2-K-Sum" class="headerlink" title="Leetcode笔记2 - K-Sum"></a>Leetcode笔记2 - K-Sum</h1><p>K-Sum类问题是指给你一个数组，让你从中挑选出K个数字满足和为N。</p>
-<p>K-Sum类的核心思想是 2Sum，然后套娃就行了。因此此类问题的关键点在于<strong>2Sum</strong>的实现。</p>
-<p><strong>核心思路</strong>：</p>
-<p>​	1、<strong>数组排序</strong></p>
-<p>​	2、<strong>双指针</strong>：头尾相向移动，遇到相同的数字跳过</p>
-<p>​	3、<strong>防止重复值</strong>：每个最外层的遍历都需要防止重复值，以及对于遍历数组的边界值的处理</p>
-<p><strong>套路模板：</strong></p>
-<p>实现(K-1)-Sum，以3Sum为例，首先要实现2Sum：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 2-Sum可直接默写</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">twoSum</span>(<span class="params">nums, start, target</span>):</span><br><span class="line">    res = []</span><br><span class="line">    low, high = start, <span class="built_in">len</span>(nums)-<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> low &lt; high:</span><br><span class="line">        sum_ = nums[low] + nums[high]</span><br><span class="line">        <span class="keyword">if</span> sum_ &lt; target:</span><br><span class="line">            low += <span class="number">1</span></span><br><span class="line">            <span class="comment"># 指针一定要注意，因为前面已经low += 1了</span></span><br><span class="line">            <span class="comment"># 所以现在的nums[low]一定要和nums[low-1]去比较</span></span><br><span class="line">            <span class="keyword">while</span> low &lt; high <span class="keyword">and</span> nums[low] == nums[low-<span class="number">1</span>]: low += <span class="number">1</span> </span><br><span class="line">        <span class="keyword">elif</span> sum_ &gt; target:</span><br><span class="line">            high -= <span class="number">1</span></span><br><span class="line">            <span class="comment"># nums[high]同理</span></span><br><span class="line">            <span class="keyword">while</span> low &lt; high <span class="keyword">and</span> nums[high] == nums[high+<span class="number">1</span>]: high -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            res.append([nums[low], nums[high]])</span><br><span class="line">            low += <span class="number">1</span></span><br><span class="line">            high -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> low &lt; high <span class="keyword">and</span> nums[low] == nums[low-<span class="number">1</span>]: low += <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> low &lt; high <span class="keyword">and</span> nums[high] == nums[high+<span class="number">1</span>]: high -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3-Sum 主要是要注意边界值的问题 和 要防止有重复值</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">threeSum</span>(<span class="params">nums, target</span>):</span><br><span class="line">    nums.sort()</span><br><span class="line">    res = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(nums[i]-<span class="number">2</span>): <span class="comment">## 注意边界值为K-1</span></span><br><span class="line">        <span class="keyword">if</span> nums[i] &gt; <span class="number">0</span>: <span class="keyword">break</span> <span class="comment">## 因为是升序排列，可提高效率</span></span><br><span class="line">        <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i-<span class="number">1</span>]: <span class="keyword">continue</span> <span class="comment">## 防止有重复值</span></span><br><span class="line">        <span class="comment">## 调用2Sum</span></span><br><span class="line">        target_ = target - nums[i]</span><br><span class="line">        tuples = twoSum(nums, i+<span class="number">1</span>, target_)</span><br><span class="line">        <span class="keyword">for</span> tup <span class="keyword">in</span> tuples:</span><br><span class="line">            tup.append(nums[i])</span><br><span class="line">            res.append(tip)</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">        </span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="15-三数之和"><a href="#15-三数之和" class="headerlink" title="15. 三数之和"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/3sum/">15. 三数之和</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">twoSum</span>(<span class="params">self, nums, start, target</span>):</span><br><span class="line">        res = []</span><br><span class="line">        low = start</span><br><span class="line">        high = <span class="built_in">len</span>(nums) - <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> low &lt; high:</span><br><span class="line">            sum_ = nums[low] + nums[high]</span><br><span class="line">            <span class="keyword">if</span> sum_ &gt; target:</span><br><span class="line">                high -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">while</span> low &lt; high <span class="keyword">and</span> nums[high] == nums[high+<span class="number">1</span>]: high = high -<span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> sum_ &lt; target:</span><br><span class="line">                low += <span class="number">1</span></span><br><span class="line">                <span class="keyword">while</span> low &lt; high <span class="keyword">and</span> nums[low] == nums[low-<span class="number">1</span>]: low += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res.append([nums[low], nums[high]])</span><br><span class="line">                high -= <span class="number">1</span></span><br><span class="line">                low += <span class="number">1</span></span><br><span class="line">                <span class="keyword">while</span> low &lt; high <span class="keyword">and</span> nums[high] == nums[high+<span class="number">1</span>]: high -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">while</span> low &lt; high <span class="keyword">and</span> nums[low] == nums[low-<span class="number">1</span>]: low += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">threeSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        nums.sort()</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)-<span class="number">2</span>):</span><br><span class="line">            <span class="keyword">if</span> nums[i] &gt; <span class="number">0</span>: <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i-<span class="number">1</span>]: <span class="keyword">continue</span></span><br><span class="line">            tuples = self.twoSum(nums, i+<span class="number">1</span>, -nums[i])</span><br><span class="line">            <span class="keyword">for</span> tup <span class="keyword">in</span> tuples:</span><br><span class="line">                tup.append(nums[i])</span><br><span class="line">                res.append(tup)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-
-<h2 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1. 两数之和"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/two-sum/description/">1. 两数之和</a></h2><p>这里有个小技巧：<strong>给定一个数组，当我们每次需要移动一个指针，然后遍历扫描该指针后面的数组元素的时候，其实可以用哈希表来降低算法复杂度 —— 仅需要扫一遍即可</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入：nums = [2,7,11,15], target = 9</span></span><br><span class="line"><span class="comment"># 输出：[0,1]</span></span><br><span class="line"><span class="comment"># 解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">twoSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        hashtable = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> i, num <span class="keyword">in</span> <span class="built_in">enumerate</span>(nums):</span><br><span class="line">            <span class="keyword">if</span> target - num <span class="keyword">in</span> hashtable:</span><br><span class="line">                <span class="keyword">return</span> [hashtable[target-num], i]</span><br><span class="line">            hashtable[nums[i]] = i <span class="comment"># 每次在最后往哈希表里更新即可</span></span><br><span class="line">        <span class="keyword">return</span> []</span><br></pre></td></tr></table></figure>
 
  
       <!-- reward -->
