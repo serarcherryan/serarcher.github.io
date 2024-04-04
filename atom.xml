@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-04-02T05:33:26.818Z</updated>
+  <updated>2024-04-04T15:03:06.753Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode笔记9 - 位运算</title>
+    <link href="http://example.com/2024/04/04/leetcode-xor/"/>
+    <id>http://example.com/2024/04/04/leetcode-xor/</id>
+    <published>2024-04-04T14:59:01.000Z</published>
+    <updated>2024-04-04T15:03:06.753Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Leetcode笔记9-位运算&quot;&gt;&lt;a href=&quot;#Leetcode笔记9-位运算&quot; class=&quot;headerlink&quot; title=&quot;Leetcode笔记9 - 位运算&quot;&gt;&lt;/a&gt;Leetcode笔记9 -</summary>
+        
+      
+    
+    
+    
+    <category term="Leetcode算法笔记" scheme="http://example.com/categories/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="Leetcode算法笔记" scheme="http://example.com/tags/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode笔记8 - 二维动态规划总结</title>
