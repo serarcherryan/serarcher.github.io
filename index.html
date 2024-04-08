@@ -163,6 +163,123 @@
     
     
     <article
+  id="post-hello-world"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/03/07/hello-world/"
+    >前言
+  <i class="article-topping">置顶</i>
+</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/03/07/hello-world/" class="article-date">
+  <time datetime="2024-03-07T04:48:07.808Z" itemprop="datePublished">2024-03-07</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>记录、积累、反思、回顾</p>
+<p>May this blog help you.</p>
+<p>欢迎交流：<a href="mailto:&#121;&#x79;&#x7a;&#104;&#x75;&#46;&#x72;&#x79;&#x61;&#x6e;&#x40;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#x6d;">&#121;&#x79;&#x7a;&#104;&#x75;&#46;&#x72;&#x79;&#x61;&#x6e;&#x40;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
+  id="post-漏洞分析-CVE-2024-1086"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/04/07/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-CVE-2024-1086/"
+    >漏洞分析-CVE-2024-1086</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/04/07/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-CVE-2024-1086/" class="article-date">
+  <time datetime="2024-04-07T04:41:23.000Z" itemprop="datePublished">2024-04-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">漏洞分析</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="CVE-2024-1086-Double-Free-in-nf-tables"><a href="#CVE-2024-1086-Double-Free-in-nf-tables" class="headerlink" title="CVE-2024-1086 Double Free in nf_tables"></a>CVE-2024-1086 Double Free in nf_tables</h1><p>这个漏洞的根因其实还是非常容易理解的——主要是内核代码里没有校验参数，导致用户可以利用。但是通读了原作者的分析文章，发现作者详细描述了其发现漏洞的思路，这对我们做内核的测试和漏洞挖掘都有一些较深启示。此外，作者也利用了Dirty pagetable这一较新的漏洞利用方法，值得一探究竟。</p>
+<p>探究过内核的人都知道内核的代码量之大，架构之复杂是令人惊叹的。因此本文也会对与本漏洞相关的内核概念做一些介绍，而那些在网上可以直接搜到的非技术类信息，本文则不多赘述。</p>
+<p>作者的原文在这里：<a target="_blank" rel="noopener" href="https://pwning.tech/nftables/#3-the-bug%EF%BC%8C%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E5%8F%AF%E4%BB%A5%E8%87%AA%E8%A1%8C%E9%98%85%E8%AF%BB%E3%80%82">https://pwning.tech/nftables/#3-the-bug，感兴趣的可以自行阅读。</a></p>
+<h2 id="1-漏洞发现"><a href="#1-漏洞发现" class="headerlink" title="1. 漏洞发现"></a>1. 漏洞发现</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">It all started when I wanted to implement firewall bypasses into my ORB rootkit Netkit. I wanted to rely on the kernel API (exported functions) for any actions, as it would have the same compatibility as regular kernel modules. Hopefully, this would mean that the rootkit kernel module could be used across architectures and kernel versions, without having to change the source code.</span><br><span class="line">...</span><br><span class="line">While reading nf_tables code - whose state machine is very interesting from a software development point of view - I noticed the nf_hook_slow() function. This function loops over all rules in a chain and stops evaluation (returns the function) immediately when NF_DROP is issued.</span><br></pre></td></tr></table></figure>
+
+<p>作者是为了实现其工具，用到了netfilter相关的技术，才开始研究的这块技术。而此前作者和我们一样，也对此领域一无所知。当作者通读了源码之后发现了这个<em>nf_hook_slow()<em>这个函数会循环遍历每一条存在的规则。而在</em>NF_DROP</em>条件下，其返回值<em>ret</em>是取决于<em>verdict</em>的，而通过进一步对<em>verdict</em>的分析，作者又发现其值是可以被用户控制的。因此作者就抱着试一试的心态，将<em>NF_DROP</em>下的返回值<em>ret</em>设置为<em>NF_ACCEPT</em>，看看内核是否会发生什么异常。结果，作者发现了一堆panic的错误，经过分析，发现了double-free的问题。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// looping over existing rules when skb triggers chain</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">nf_hook_slow</span><span class="params">(<span class="keyword">struct</span> sk_buff *skb, <span class="keyword">struct</span> nf_hook_state *state,</span></span><br><span class="line"><span class="params">		 <span class="type">const</span> <span class="keyword">struct</span> nf_hook_entries *e, <span class="type">unsigned</span> <span class="type">int</span> s)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> verdict;</span><br><span class="line">	<span class="type">int</span> ret;</span><br><span class="line">	<span class="keyword">for</span> (; s &lt; e-&gt;num_hook_entries; s++) &#123;</span><br><span class="line">		verdict = nf_hook_entry_hookfn(&amp;e-&gt;hooks[s], skb, state);</span><br><span class="line">		<span class="keyword">switch</span> (verdict &amp; NF_VERDICT_MASK) &#123;</span><br><span class="line">		<span class="keyword">case</span> NF_ACCEPT:</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> NF_DROP:</span><br><span class="line">			kfree_skb_reason(skb, SKB_DROP_REASON_NETFILTER_DROP);</span><br><span class="line">			ret = NF_DROP_GETERR(verdict);</span><br><span class="line">			<span class="keyword">if</span> (ret == <span class="number">0</span>)</span><br><span class="line">				ret = -EPERM;</span><br><span class="line">			<span class="keyword">return</span> ret;</span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			WARN_ON_ONCE(<span class="number">1</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个问题的整体发现思路其实是：<strong>1. 作者想实现工具 ——&gt; 2. 学习Netfilter知识 ——&gt; 3. 找到相关内核函数进行分析 ——&gt; 4. 发现可能漏洞点并尝试测试 ——&gt; 5. 系统panic ——&gt; 6. 进一步分析 ——&gt; 7. 发现double free问题 ——&gt; 8. 尝试漏洞利用</strong>。</p>
+<p>我自己反思了一下，如果是我做工具的实现，可能卡在第4步就不会继续往下走了——即使发现了可能存在的漏洞点也不会尝试。又或者简单尝试了一下之后发现系统panic，也不去做进一步的分析了。</p>
+<p>当然作为测试，我们可能也往往做到第5步就当完成了任务，提单然后交给开发分析解决，不会去想怎么进一步利用。 因为利用更加考察平时对技术的积累和技术熟练度。而作为安全从业人员，其与测试人员的区别往往就在于是否具备后者的能力。</p>
+<p>TBD</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" rel="tag">漏洞分析</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
   id="post-leetcode-xor"
   class="article article-type-post"
   itemscope
@@ -282,120 +399,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" rel="tag">Leetcode算法笔记</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
-  id="post-安全八股"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/03/25/%E5%AE%89%E5%85%A8%E5%85%AB%E8%82%A1/"
-    >安全八股</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/03/25/%E5%AE%89%E5%85%A8%E5%85%AB%E8%82%A1/" class="article-date">
-  <time datetime="2024-03-25T05:09:45.000Z" itemprop="datePublished">2024-03-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  Here's something encrypted. Password is required to continue reading. 
-      <a class="article-more-link" href="/2024/03/25/%E5%AE%89%E5%85%A8%E5%85%AB%E8%82%A1/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
-  id="post-CV深挖"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/03/24/CV%E6%B7%B1%E6%8C%96/"
-    >CV深挖</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/03/24/CV%E6%B7%B1%E6%8C%96/" class="article-date">
-  <time datetime="2024-03-24T09:53:11.000Z" itemprop="datePublished">2024-03-24</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  Here's something encrypted. Password is required to continue reading. 
-      <a class="article-more-link" href="/2024/03/24/CV%E6%B7%B1%E6%8C%96/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
 
     </footer>
   </div>
