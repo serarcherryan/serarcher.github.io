@@ -194,7 +194,7 @@
        
   <p>记录、积累、反思、回顾</p>
 <p>May this blog help you.</p>
-<p>欢迎交流：<a href="mailto:&#x79;&#x79;&#122;&#x68;&#x75;&#46;&#114;&#x79;&#97;&#x6e;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;">&#x79;&#x79;&#122;&#x68;&#x75;&#46;&#114;&#x79;&#97;&#x6e;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;</a></p>
+<p>欢迎交流：<a href="mailto:&#121;&#x79;&#x7a;&#x68;&#x75;&#x2e;&#114;&#x79;&#97;&#x6e;&#64;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#109;">&#121;&#x79;&#x7a;&#x68;&#x75;&#x2e;&#114;&#x79;&#97;&#x6e;&#64;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#109;</a></p>
  
       <!-- reward -->
       
@@ -205,6 +205,93 @@
     
     <footer class="article-footer">
        
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
+    
+    <article
+  id="post-syzkaller1"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/04/12/syzkaller1/"
+    >Syzkaller使用笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/04/12/syzkaller1/" class="article-date">
+  <time datetime="2024-04-11T18:45:53.000Z" itemprop="datePublished">2024-04-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7/">安全工具</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Syzkaller使用笔记"><a href="#Syzkaller使用笔记" class="headerlink" title="Syzkaller使用笔记"></a>Syzkaller使用笔记</h1><h2 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1. 环境配置"></a>1. 环境配置</h2><h3 id="1-1-环境依赖"><a href="#1-1-环境依赖" class="headerlink" title="1.1 环境依赖"></a>1.1 环境依赖</h3><ul>
+<li>gcc make clang</li>
+<li>go (<a target="_blank" rel="noopener" href="https://go.dev/dl/">https://go.dev/dl/</a> 最新syzkaller要求1.20以上的go版本，但是1.22的go又跑出来空指针导致panic了，所以直接用1.20的就可以)</li>
+<li>syzkaller(<a target="_blank" rel="noopener" href="https://github.com/google/syzkaller.git">https://github.com/google/syzkaller.git</a>)</li>
+<li>kasan内核 （可以通过源码开启config配置项编译）</li>
+</ul>
+<h3 id="1-2-工作目录"><a href="#1-2-工作目录" class="headerlink" title="1.2 工作目录"></a>1.2 工作目录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /root/workdir/kasan</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-定制化建模（如果不自己建模可以跳过这一部分）"><a href="#2-定制化建模（如果不自己建模可以跳过这一部分）" class="headerlink" title="2. 定制化建模（如果不自己建模可以跳过这一部分）"></a>2. 定制化建模（如果不自己建模可以跳过这一部分）</h2><ul>
+<li>环境配置好后，进入syzkaller目录，先编译生成syz-extract</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /root/syzkaller</span><br><span class="line">make bin/syz-extract</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>将自己建模的**.txt<strong>文件和</strong>.h**文件放入 syzkaller&#x2F;sys&#x2F;linux&#x2F; 目录下</p>
+</li>
+<li><p>通过syz-extract从**.txt**文件中提取出常量，这一步需要用到内核源码</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/syz-extract -sourcedir /root/kernel-source a.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>访问**.const**常量文件，没有???则代表建模成功</li>
+</ul>
+<h2 id="3-编译syzkaller"><a href="#3-编译syzkaller" class="headerlink" title="3. 编译syzkaller"></a>3. 编译syzkaller</h2><p>编译syzkaller，生成syz-manager等二进制。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make clean </span><br><span class="line">make generate</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>编译成功的同时也会在bin&#x2F;linux-amd64目录下生成 syz-extractor等二进制文件，需要将这些二进制文件传到对端。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp bin/linux-*/* root@remoteIP:/root/</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-哈哈哈哈哈我疯了"><a href="#4-哈哈哈哈哈我疯了" class="headerlink" title="4. 哈哈哈哈哈我疯了"></a>4. 哈哈哈哈哈我疯了</h2> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7/" rel="tag">安全工具</a></li></ul>
+
     </footer>
   </div>
 
@@ -819,85 +906,6 @@
 <li>涉及到数组边界不清晰的时候，<strong>最好用while循环遍历数组</strong>而不用nums[low:high]的形式</li>
 </ul>
 <h3 id="215-数组中的第K个最大元素-1"><a href="#215-数组中的第K个最大元素-1" class="headerlink" title="215. 数组中的第K个最大元素"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/kth-largest-element-in-an-array/">215. 数组中的第K个最大元素</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 归并排序的思路是，分成左右两个有序数组，然后要将两个数组按顺序合并好</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findKthLargest</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">merge</span>(<span class="params">nums, low, mid, high</span>): <span class="comment"># 职能是将两个有序数组按顺序合并好——双指针</span></span><br><span class="line">            i, j = low, mid+<span class="number">1</span></span><br><span class="line">            res = []</span><br><span class="line">            <span class="keyword">while</span> i &lt;= mid <span class="keyword">and</span> j &lt;= high:</span><br><span class="line">                <span class="keyword">if</span> nums[i] &lt; nums[j]: </span><br><span class="line">                    res.append(nums[i])</span><br><span class="line">                    i += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>: </span><br><span class="line">                    res.append(nums[j])</span><br><span class="line">                    j += <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> i &lt;= mid:</span><br><span class="line">                res.append(nums[i])</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> j &lt;= high:</span><br><span class="line">                res.append(nums[j])</span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">            nums[low:high+<span class="number">1</span>] = res[:]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">sort</span>(<span class="params">nums, low, high</span>):</span><br><span class="line">            <span class="keyword">if</span> low &gt;= high:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            mid = (low + high) // <span class="number">2</span> 	<span class="comment"># 取1/2分成左右两个数组</span></span><br><span class="line">            sort(nums, low, mid)		<span class="comment"># 处理左数组</span></span><br><span class="line">            sort(nums, mid+<span class="number">1</span>, high) 	<span class="comment"># 处理右数组</span></span><br><span class="line">            merge(nums, low, mid, high) <span class="comment"># 合并左右两个数组</span></span><br><span class="line">        </span><br><span class="line">        sort(nums, <span class="number">0</span>, <span class="built_in">len</span>(nums)-<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> nums[-k]</span><br></pre></td></tr></table></figure>
-
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" rel="tag">Leetcode算法笔记</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-  
-</article>
-
-    
-    <article
-  id="post-leetcode-backtrace"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2024/03/14/leetcode-backtrace/"
-    >Leetcode笔记3 - 回溯类问题（DFS）解题模板</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2024/03/14/leetcode-backtrace/" class="article-date">
-  <time datetime="2024-03-14T11:32:27.000Z" itemprop="datePublished">2024-03-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Leetcode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/">Leetcode算法笔记</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="Leetcode笔记3-回溯类问题-DFS"><a href="#Leetcode笔记3-回溯类问题-DFS" class="headerlink" title="Leetcode笔记3 - 回溯类问题-DFS"></a>Leetcode笔记3 - 回溯类问题-DFS</h1><h2 id="1-回溯类问题"><a href="#1-回溯类问题" class="headerlink" title="1. 回溯类问题"></a>1. 回溯类问题</h2><p>每次刷题刷完了不久就会忘记DFS的很多细节。。直到看到了东哥的<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nMUHqvwzG2LmWA9jMIHwQQ">回溯算法详解</a>，才从根上理解了这一类算法的底层原理。</p>
-<p>对于我这种看到算法就头疼的选手，还真得靠这种大佬帮忙梳理总结底层原理才行。。</p>
-<p><strong>核心框架 &amp;&amp; 解题模板</strong>：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 定义：</span></span><br><span class="line"><span class="comment">#1、路径：当前已经做过的所有选择</span></span><br><span class="line"><span class="comment">#2、选择列表：当前结点可以做的选择</span></span><br><span class="line"><span class="comment">#3、结束条件：即到达决策树底层，无法再做选择的条件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 核心框架</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">backtrace</span>(<span class="params">路径，选择列表</span>)：</span><br><span class="line">	<span class="keyword">if</span> 满足结束条件：</span><br><span class="line">    	<span class="keyword">return</span></span><br><span class="line">    <span class="keyword">for</span> 选择 <span class="keyword">in</span> 选择列表：</span><br><span class="line">        <span class="comment">#做选择</span></span><br><span class="line">        backtrace()</span><br><span class="line">        <span class="comment">#撤销选择</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> 选择 <span class="keyword">in</span> 选择列表：</span><br><span class="line">	<span class="comment"># 做选择</span></span><br><span class="line">    选择列表.remove(当前选择)</span><br><span class="line">    路径.add(当前选择)</span><br><span class="line">    <span class="comment"># 回溯</span></span><br><span class="line">    backtrace(路径，选择列表)</span><br><span class="line">    <span class="comment"># 撤销选择</span></span><br><span class="line">    路径.remove(当前选择)</span><br><span class="line">    选择列表.add(当前选择)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="49-子集"><a href="#49-子集" class="headerlink" title="49. 子集"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subsets/">49. 子集</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入：nums = [1,2,3]</span></span><br><span class="line"><span class="comment"># 输出：[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 按照回溯的思想，有前序和后序两种方式</span></span><br><span class="line"><span class="comment">## 1、如果是前序执行，则路径的记录顺序应该为:</span></span><br><span class="line"><span class="comment">## [],[1],[1,2],[1,2,3],(从这里开始回撤)[1,3],(再次回撤)[2],[2,3],(再次回撤)[3]</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">subsets</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        res = [] <span class="comment"># 记录最终结果</span></span><br><span class="line">        track = [] <span class="comment"># 维护当前路径</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">backtrace</span>(<span class="params">nums, start</span>):</span><br><span class="line">            res.append(track[:]) <span class="comment"># 把当前路径记录到最终结果里</span></span><br><span class="line">            <span class="comment">## 模板</span></span><br><span class="line">            <span class="comment">## 注意，这里的nums就是我们可以做出选择的选择列表;</span></span><br><span class="line">            <span class="comment">## 且这里的隐藏结束条件是for循环到头</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start, <span class="built_in">len</span>(nums)): </span><br><span class="line">                <span class="comment">## 做选择</span></span><br><span class="line">                track.append(nums[i])</span><br><span class="line">                <span class="comment">## 回溯</span></span><br><span class="line">                backtrace(nums, i+<span class="number">1</span>)</span><br><span class="line">                <span class="comment">## 回撤</span></span><br><span class="line">                track.pop()</span><br><span class="line">        backtrace(nums, <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    </span><br><span class="line"><span class="comment">## 2、也可以后序执行，则路径的记录顺序为：</span></span><br><span class="line"><span class="comment">## [1,2,3],[1,2],(这里开始有个回撤)[1,3],(再次回撤)[1],(再次回撤)[2,3],(再次回撤)[2],(再次回撤)[3],(自己补一个)[]</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">subsets</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        res = [] <span class="comment"># 记录最终结果</span></span><br><span class="line">        track = [] <span class="comment"># 维护当前路径</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">backtrace</span>(<span class="params">nums, start</span>):</span><br><span class="line">            <span class="comment">## 模板</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start, <span class="built_in">len</span>(nums)):</span><br><span class="line">                <span class="comment">## 做选择</span></span><br><span class="line">                track.append(nums[i])</span><br><span class="line">                <span class="comment">## 回溯</span></span><br><span class="line">                backtrace(nums, i+<span class="number">1</span>)</span><br><span class="line">                <span class="comment">## 撤回选择</span></span><br><span class="line">                track.pop()</span><br><span class="line">            res.append(track[:])</span><br><span class="line">        backtrace(nums, <span class="number">0</span>)</span><br><span class="line">        res.append([])</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="46-全排列"><a href="#46-全排列" class="headerlink" title="46. 全排列"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/permutations/description/">46. 全排列</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入：nums = [1,2,3]</span></span><br><span class="line"><span class="comment"># 输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">permute</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        res = []</span><br><span class="line">        track = []</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">backtrace</span>(<span class="params">nums</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(track) == <span class="built_in">len</span>(nums):</span><br><span class="line">                res.append(track[:])</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)):</span><br><span class="line">                <span class="keyword">if</span> nums[i] <span class="keyword">in</span> track: <span class="keyword">continue</span></span><br><span class="line">                <span class="comment">## 做选择</span></span><br><span class="line">                track.append(nums[i])</span><br><span class="line">                <span class="comment">## 回溯</span></span><br><span class="line">                backtrace(nums)</span><br><span class="line">                <span class="comment">## 撤销选择</span></span><br><span class="line">                track.pop()</span><br><span class="line">                </span><br><span class="line">        backtrace(nums)</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="22-括号生成"><a href="#22-括号生成" class="headerlink" title="22. 括号生成"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/generate-parentheses/">22. 括号生成</a></h3><p>此题同样可以通过动态规划求解，因为我们发现对于n组’()’，在’()’的不同位置，添加任意’()’，即可得到n+1的解。又即，dp(n)依赖于dp(n-1)。详细解法见动态规划类解题模板。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。</span></span><br><span class="line"><span class="comment"># 示例 1：</span></span><br><span class="line"><span class="comment"># 输入：n = 3</span></span><br><span class="line"><span class="comment"># 输出：[&quot;((()))&quot;,&quot;(()())&quot;,&quot;(())()&quot;,&quot;()(())&quot;,&quot;()()()&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例 2：</span></span><br><span class="line"><span class="comment"># 输入：n = 1</span></span><br><span class="line"><span class="comment"># 输出：[&quot;()&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generateParenthesis</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">        track = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">backtrace</span>(<span class="params">n, left, right, track</span>):</span><br><span class="line">            <span class="keyword">if</span> left &gt; n <span class="keyword">or</span> right &gt; left:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">if</span> left == right == n:</span><br><span class="line">                res.append(track)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">for</span> choice <span class="keyword">in</span> [<span class="string">&#x27;(&#x27;</span>,<span class="string">&#x27;)&#x27;</span>]: <span class="comment">## 注意，我们的选择其实只有&#x27;(&#x27;和&#x27;)&#x27;两个，我们的base case取决于&#x27;(&#x27;和&#x27;)&#x27;的数量</span></span><br><span class="line">                <span class="keyword">if</span> choice == <span class="string">&#x27;(&#x27;</span>: left += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>: right += <span class="number">1</span></span><br><span class="line">                track += choice</span><br><span class="line">                backtrace(n, left, right, track)</span><br><span class="line">                <span class="keyword">if</span> track[-<span class="number">1</span>] == <span class="string">&#x27;(&#x27;</span>: left -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>: right -= <span class="number">1</span></span><br><span class="line">                track = track[:-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        backtrace(n, <span class="number">0</span>, <span class="number">0</span>, track)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="2-DFS类问题"><a href="#2-DFS类问题" class="headerlink" title="2. DFS类问题"></a>2. DFS类问题</h2><h3 id="226-翻转二叉树"><a href="#226-翻转二叉树" class="headerlink" title="226. 翻转二叉树"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/invert-binary-tree/">226. 翻转二叉树</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入：root = [4,2,7,1,3,6,9]</span></span><br><span class="line"><span class="comment"># 输出：[4,7,2,9,6,3,1]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">invertTree</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">Optional</span>[TreeNode]:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">root</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            root.left, root.right = root.right, root.left</span><br><span class="line">            dfs(root.left)</span><br><span class="line">            dfs(root.right)</span><br><span class="line">        dfs(root)</span><br><span class="line">        <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="543-二叉树的直径"><a href="#543-二叉树的直径" class="headerlink" title="543. 二叉树的直径"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/diameter-of-binary-tree/">543. 二叉树的直径</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入：root = [1,2,3,4,5]</span></span><br><span class="line"><span class="comment"># 输出：3</span></span><br><span class="line"><span class="comment"># 解释：3 ，取路径 [4,2,1,3] 或 [5,2,1,3] 的长度</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">diameterOfBinaryTree</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        self.d = <span class="number">0</span>  <span class="comment"># 记录最终结果</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">root</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            left = dfs(root.left)</span><br><span class="line">            right = dfs(root.right)</span><br><span class="line">            self.d = <span class="built_in">max</span>(self.d, left + right)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">max</span>(left, right) + <span class="number">1</span>   <span class="comment"># 要维护的是当前结点的最长子路径，回撤操作+1</span></span><br><span class="line">        dfs(root)</span><br><span class="line">        <span class="keyword">return</span> self.d</span><br></pre></td></tr></table></figure>
 
  
       <!-- reward -->
